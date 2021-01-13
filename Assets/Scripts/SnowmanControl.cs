@@ -1,59 +1,202 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEditor;
 
+/// <summary>
+/// Processes input and applies control to the snowman actor.
+/// </summary>
 public sealed class SnowmanControl : MonoBehaviour
 {
-    private enum ControlMode : byte
+    #region Local Enums
+    /// <summary>
+    /// Holds the current interaction mode for the snowman actor.
+    /// </summary>
+    public enum ControlMode : byte
     {
         Launching,
         Sledding,
         Flying,
         Sliding
     }
-
-
+    #endregion
+    #region Local Fields
+    private Vector2 currentNormal;
+    private Vector2 normalsAccumulator;
+    #endregion
+    #region Inspector Fields
+    [Tooltip("The current behaviour state of the controller.")]
     [SerializeField] private ControlMode controlMode = ControlMode.Launching;
+    [Header("Actor Components")]
+    [Tooltip("The body that drives the physics interactions for the controller.")]
+    [SerializeField] private Rigidbody2D body = null;
+    [Tooltip("The root transform for all renderers.")]
     [SerializeField] private Transform cosmeticsRoot = null;
-
-    // Vector2.zero is a sentinel value for `no collisions this frame`.
-    private Vector2 priorAggregateNormal;
-    private Vector2 aggregateNormal;
-
-    private void OnCollisionStay2D(Collision2D collision)
+    [Header("Launch Parameters")]
+    [Tooltip("Describes the location and orientation that the actor is returned to during launch.")]
+    [SerializeField] private Transform launchPoint = null;
+    [Tooltip("Describes the world x location that defines the end of the launch ramp.")]
+    [SerializeField] private Transform rampEndMarker = null;
+    [Header("Flight Parameters")]
+    [Tooltip("Seconds elapsed to transition from sledding to flight.")]
+    [SerializeField] private float flightTransitionTime = 0f;
+    [Tooltip("Determines the base strength of the flapping control.")]
+    [SerializeField] private float baseFlapStrength = 0f;
+    [Header("Input Channels")]
+    [Tooltip("The button broadcaster for when the player should launch.")]
+    [SerializeField] private ButtonDownBroadcaster onLaunchBroadcaster = null;
+    [Tooltip("The button broadcaster for when the player should flap to gain altitude.")]
+    [SerializeField] private ButtonDownBroadcaster onWingFlapBroadcaster = null;
+    #endregion
+#if DEBUG
+    #region Gizmos Implementation
+    private void OnDrawGizmosSelected()
     {
-        foreach (ContactPoint2D contact in collision.contacts)
-            aggregateNormal += contact.normal;
-    }
-    private void FixedUpdate()
-    {
-        if (aggregateNormal != Vector2.zero)
-            priorAggregateNormal = aggregateNormal.normalized;
-        else
-            priorAggregateNormal = Vector2.zero;
-        aggregateNormal = Vector2.zero;
-    }
-
-    private void Update()
-    {
-        if (priorAggregateNormal != Vector2.zero)
+        if (rampEndMarker != null)
         {
-            aggregateNormal.Normalize();
-            switch (controlMode)
+            // Draw a vertical dashed line to denote the ramp end location.
+            Gizmos.color = Color.white;
+            GizmosHelper.DrawAsymptote(rampEndMarker.position.x);
+            Handles.Label(rampEndMarker.position + Vector3.right * 0.5f, "Ramp End");
+        }
+    }
+    #endregion
+#endif
+    #region Initialization
+    private void Awake()
+    {
+        Mode = controlMode;
+    }
+    #endregion
+    #region Properties
+    /// <summary>
+    /// Whether the snowman is currently sliding along a surface.
+    /// </summary>
+    public bool IsOnSurface { get; private set; }
+    /// <summary>
+    /// The current interaction mode for the snowman actor.
+    /// </summary>
+    public ControlMode Mode
+    {
+        set
+        {
+            controlMode = value;
+            // Clear all input channels, before applying them
+            // in the context of each mode.
+            onLaunchBroadcaster.Listener = null;
+            onWingFlapBroadcaster.Listener = null;
+            body.isKinematic = false;
+            // Initialize the state for each mode type.
+            switch (value)
             {
-                case ControlMode.Sledding: FixedUpdateSledding(); break;
+                case ControlMode.Launching:
+                    cosmeticsRoot.up = Vector3.up;
+                    onLaunchBroadcaster.Listener = OnLaunchPressed;
+                    transform.position = launchPoint.position;
+                    body.isKinematic = true;
+                    break;
+                case ControlMode.Sledding:
+                    cosmeticsRoot.up = Vector3.up;
+                    break;
+                case ControlMode.Flying:
+                    cosmeticsRoot.up = Vector3.right;
+                    onWingFlapBroadcaster.Listener = OnWingFlapPressed;
+                    break;
+                case ControlMode.Sliding:
+                    cosmeticsRoot.up = Vector3.right;
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
         }
     }
-    private void FixedUpdateSledding()
+    #endregion
+    #region Collisions Implementation
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        cosmeticsRoot.up = priorAggregateNormal;
+        // Track and add up collision normals this fixed update.
+        foreach (ContactPoint2D contact in collision.contacts)
+            normalsAccumulator += contact.normal;
     }
-
-
-    // Start is called before the first frame update
-    private void Awake()
+    private void FixedUpdate()
     {
-        aggregateNormal = Vector2.zero;
+        // Set set according to whether there were collisions
+        // on this fixed update step.
+        if (normalsAccumulator != Vector2.zero)
+        {
+            currentNormal = normalsAccumulator.normalized;
+            IsOnSurface = true;
+        }
+        else
+        {
+            currentNormal = Vector2.zero;
+            IsOnSurface = false;
+        }
+        // Reset the normals for next frame.
+        normalsAccumulator = Vector2.zero;
     }
+    #endregion
+    #region Update Implementation
+    private void Update()
+    {
+        // Switch drawing procedure based on state.
+        switch (controlMode)
+        {
+            case ControlMode.Sledding: UpdateSledding(); break;
+            case ControlMode.Flying: UpdateFlying(); break;
+            case ControlMode.Sliding: UpdateSliding(); break;
+        }
+        void UpdateSledding()
+        {
+            // Align the cosmetics to the current slope.
+            if (IsOnSurface)
+                cosmeticsRoot.up = currentNormal;
+            // Check to see if the extents of the ramp have been exceeded.
+            if (body.position.x > rampEndMarker.position.x)
+                Mode = ControlMode.Flying;
+        }
+        void UpdateFlying()
+        {
+            // Check to see if the actor has become grounded.
+            if (IsOnSurface)
+                Mode = ControlMode.Sliding;
+        }
+        void UpdateSliding()
+        {
+            // Check to see if the actor has become airbourne.
+            if (!IsOnSurface)
+                Mode = ControlMode.Flying;
+            else
+            {
+                // Align the cosmetics such that the snowman
+                // is sliding along the current slope.
+                cosmeticsRoot.right = -currentNormal;
+            }
+        }
+    }
+    #endregion
+    #region Input Listeners
+    private void OnLaunchPressed()
+    {
+        Mode = ControlMode.Sledding;
+    }
+    private void OnWingFlapPressed()
+    {
+        if (body.velocity.y < 0f)
+        {
+            body.velocity = new Vector2
+            {
+                x = body.velocity.x,
+                y = baseFlapStrength
+            };
+        }
+        else
+        {
+            body.velocity = new Vector2
+            {
+                x = body.velocity.x,
+                y = body.velocity.y + baseFlapStrength
+            };
+        }
+    }
+    #endregion
 }

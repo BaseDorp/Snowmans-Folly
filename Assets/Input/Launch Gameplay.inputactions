@@ -1,0 +1,63 @@
+{
+    "name": "Launch Gameplay",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "d982222e-d2f8-4772-a337-48043f52142b",
+            "actions": [
+                {
+                    "name": "Launch",
+                    "type": "Button",
+                    "id": "c0cac8ab-6fbc-4b95-93ee-0fb5d698cc93",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Fly",
+                    "type": "Button",
+                    "id": "ca4e63af-64cd-41ca-8d03-1abd81afd1b6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2cce6fc3-7a4c-4c87-8f6a-ebd90a77fc13",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Launch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "678c6f9e-0fa9-4a09-8fa5-3f199162e030",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fly",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31a7a3a7-d4c5-4166-a593-9b1b9173d793",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fly",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
