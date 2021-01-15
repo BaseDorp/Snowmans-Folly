@@ -26,6 +26,10 @@ public sealed class PolynomialCurve2DInstance : MonoBehaviour, IValidateOnTransf
     /// The right world x position where the curve is meant to end.
     /// </summary>
     public float Right { get { return transform.position.x + curve.right; } }
+    /// <summary>
+    /// Gets the length of the interval along the x axis.
+    /// </summary>
+    public float IntervalLength { get { return curve.right - curve.left; } }
 
     [SerializeField]
     private PolynomialNode[] nodes = null;
@@ -54,7 +58,7 @@ public sealed class PolynomialCurve2DInstance : MonoBehaviour, IValidateOnTransf
     private bool showPreview = true;
     [SerializeField]
     private float previewDetail = 0.5f;
-
+    
 #if DEBUG
     #region Gizmo Parameters
     private const float HANDLE_LENGTH = 1.0f;
@@ -105,6 +109,11 @@ public sealed class PolynomialCurve2DInstance : MonoBehaviour, IValidateOnTransf
             RegenerateCurve(indicesToRegenerate.ToArray());
     }
 
+    private void Awake()
+    {
+        RegenerateCurve();
+    }
+
 
     private PolynomialCurve2D curve;
     private Vector2[] rasterizedPath;
@@ -115,7 +124,7 @@ public sealed class PolynomialCurve2DInstance : MonoBehaviour, IValidateOnTransf
         previewDetail.Clamp(0.1f, 5f);
         // Regenerate the curve and rasterized path
         // so that it can be displayed in the editor window.
-        if (nodes.Length > 1)
+        if (nodes != null && nodes.Length > 1)
         {
             RegenerateCurve();
             rasterizedPath = curve.Rasterize(previewDetail);

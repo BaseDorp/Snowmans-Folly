@@ -10,6 +10,12 @@ public sealed class CurveMover2D : MonoBehaviour
 
     [SerializeField] private PolynomialCurve2DInstance curve = null;
 
+    public PolynomialCurve2DInstance Curve
+    {
+        get { return curve; }
+        set { curve = value; }
+    }
+
     public void MoveTo(float locationX)
     {
         if (lockToCurve)
