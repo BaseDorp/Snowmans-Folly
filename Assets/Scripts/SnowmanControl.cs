@@ -7,12 +7,18 @@ using UnityEditor;
 /// </summary>
 public sealed class SnowmanControl : MonoBehaviour
 {
+    /// <summary>
+    /// This event is called whenever the snowman controller becomes disabled.
+    /// </summary>
+    public event Action ControlDisabled;
+
     #region Local Enums
     /// <summary>
     /// Holds the current interaction mode for the snowman actor.
     /// </summary>
     public enum ControlMode : byte
     {
+        Disabled,
         Launching,
         Sledding,
         Flying,
@@ -93,6 +99,7 @@ public sealed class SnowmanControl : MonoBehaviour
                     onLaunchBroadcaster.Listener = OnLaunchPressed;
                     transform.position = launchPoint.position;
                     body.isKinematic = true;
+                    body.velocity = Vector2.zero;
                     break;
                 case ControlMode.Sledding:
                     cosmeticsRoot.up = Vector3.up;
@@ -103,6 +110,11 @@ public sealed class SnowmanControl : MonoBehaviour
                     break;
                 case ControlMode.Sliding:
                     cosmeticsRoot.up = Vector3.right;
+                    break;
+                case ControlMode.Disabled:
+                    body.isKinematic = true;
+                    body.velocity = Vector2.zero;
+                    ControlDisabled?.Invoke();
                     break;
                 default:
                     throw new NotImplementedException();
