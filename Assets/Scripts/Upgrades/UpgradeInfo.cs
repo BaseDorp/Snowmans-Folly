@@ -8,6 +8,10 @@ public class UpgradeInfo : MonoBehaviour
     [SerializeField]
     private string upgradeName;
 
+    [Tooltip("The name of the variable in Stats.cs")]
+    [SerializeField]
+    private string associatedVariable;
+
     [Tooltip("The text that will display when the player selects this upgrade in the menu.")]
     [SerializeField]
     private string upgradeDescription;
@@ -16,13 +20,13 @@ public class UpgradeInfo : MonoBehaviour
     [SerializeField]
     private Sprite upgradeIcon;
 
-    [Tooltip("The amount in which the upgrade will improve with each purchase.")]
+    [Tooltip("The amount in which the upgrade will improve with each purchase (as a percentage).")]
     [SerializeField]
     private float upgradeAmount;
 
     [Tooltip("The amount of coins that the upgrade costs.")]
     [SerializeField]
-    private int upgradeCost;
+    private int upgradeCost; 
 
     public Sprite UpgradeIcon => upgradeIcon;
     public string UpgradeDescription => upgradeDescription;
@@ -35,7 +39,7 @@ public class UpgradeInfo : MonoBehaviour
         if(Currency.Coins>=upgradeCost)
         {
             Currency.Spend(upgradeCost);
+            Stats.UpgradeStats(associatedVariable,upgradeAmount);
         }
     }
-    
 }
