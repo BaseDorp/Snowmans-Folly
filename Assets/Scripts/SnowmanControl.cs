@@ -42,6 +42,8 @@ public sealed class SnowmanControl : MonoBehaviour
     [SerializeField] private Transform launchPoint = null;
     [Tooltip("Describes the world x location that defines the end of the launch ramp.")]
     [SerializeField] private Transform rampEndMarker = null;
+    [Tooltip("Describes the world y location that defines the out of bounds plane.")]
+    [SerializeField] private Transform outOfBoundsMarker = null;
     [Header("Flight Parameters")]
     [Tooltip("Seconds elapsed to transition from sledding to flight.")]
     [SerializeField] private float flightTransitionTime = 0f;
@@ -168,15 +170,21 @@ public sealed class SnowmanControl : MonoBehaviour
         }
         void UpdateFlying()
         {
-            // Check to see if the actor has become grounded.
+            // Check for changes in state.
             if (IsOnSurface)
                 Mode = ControlMode.Sliding;
+            else if (body.position.y < outOfBoundsMarker.position.y
+                || body.velocity.x < 0f)
+                Mode = ControlMode.Disabled;
         }
         void UpdateSliding()
         {
-            // Check to see if the actor has become airbourne.
+            // Check for changes in state.
             if (!IsOnSurface)
                 Mode = ControlMode.Flying;
+            else if (body.position.y < outOfBoundsMarker.position.y
+                || body.velocity.x < 0f)
+                Mode = ControlMode.Disabled;
             else
             {
                 // Align the cosmetics such that the snowman
