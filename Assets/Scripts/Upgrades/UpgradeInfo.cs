@@ -22,11 +22,20 @@ public class UpgradeInfo : MonoBehaviour
 
     [Tooltip("The amount of coins that the upgrade costs.")]
     [SerializeField]
-    private float upgradeCost;
+    private int upgradeCost;
 
     public Sprite UpgradeIcon => upgradeIcon;
     public string UpgradeDescription => upgradeDescription;
     public string UpgradeName => upgradeName;
     public float UpgradeAmount => upgradeAmount;
-    public float UpgradeCost => upgradeCost;
+    public int UpgradeCost => upgradeCost;
+
+    public void PurchaseUpgrade()
+    {
+        if(Currency.Coins>=upgradeCost)
+        {
+            Currency.Spend(upgradeCost);
+        }
+    }
+    
 }
