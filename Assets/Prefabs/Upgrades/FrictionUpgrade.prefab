@@ -43,9 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b35bfddf665a244488bbcc3cd6f1c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  linkedProfile: {fileID: 0}
   upgradeName: Friction
+  upgradeStat: 7
   upgradeDescription: This upgrade decreases the rate at which speed is lot while
     sliding along the ground.
   upgradeIcon: {fileID: 21300000, guid: 6070800667f0b164eaae69c6c8e185d9, type: 3}
-  upgradeAmount: 10
   upgradeCost: 20

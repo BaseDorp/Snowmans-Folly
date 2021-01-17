@@ -43,9 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b35bfddf665a244488bbcc3cd6f1c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  linkedProfile: {fileID: 0}
   upgradeName: Propulsion
+  upgradeStat: 2
   upgradeDescription: This upgrade increases the snowmans maneuverability in the
     air.
   upgradeIcon: {fileID: 21300000, guid: eb1cad656160d6e43b5c61d82eb46bca, type: 3}
-  upgradeAmount: 1
   upgradeCost: 5
