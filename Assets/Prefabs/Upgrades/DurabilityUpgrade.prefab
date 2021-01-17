@@ -43,9 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b35bfddf665a244488bbcc3cd6f1c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  linkedProfile: {fileID: 0}
   upgradeName: Durability
+  upgradeStat: 5
   upgradeDescription: 'This upgrade decreases the amount of speed lost when hitting
     hazards. '
   upgradeIcon: {fileID: 21300000, guid: 9b7260327edcbf944a6151d2fb8dd8e0, type: 3}
-  upgradeAmount: 1
   upgradeCost: 5

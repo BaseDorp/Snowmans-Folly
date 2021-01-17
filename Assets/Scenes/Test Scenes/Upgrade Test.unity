@@ -3025,6 +3025,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201482520}
   m_CullTransparentMesh: 0
+--- !u!1 &1221987071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1221987073}
+  - component: {fileID: 1221987072}
+  m_Layer: 0
+  m_Name: Mock Stat Profile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1221987072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221987071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9570d923cb7f3cd409dc122a3ec2d959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+  - level: 0
+    maxLevel: 5
+    minValue: 30
+    maxValue: 45
+  - level: 34
+    maxLevel: 255
+    minValue: 345
+    maxValue: 45
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+--- !u!4 &1221987073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221987071}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1244514583
 GameObject:
   m_ObjectHideFlags: 0
@@ -5732,6 +5812,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8401569737701252762, guid: eba4dfa4342c9f94dbeb72a66353abf1,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     - target: {fileID: 8416924465532513339, guid: eba4dfa4342c9f94dbeb72a66353abf1,
         type: 3}
       propertyPath: m_Name
@@ -5746,6 +5831,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3002226005222585069, guid: dd53b3355f2a69244a0ff8748c9aa382,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     - target: {fileID: 3025503848538931276, guid: dd53b3355f2a69244a0ff8748c9aa382,
         type: 3}
       propertyPath: m_Name
@@ -5820,6 +5910,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BounceUpgrade
       objectReference: {fileID: 0}
+    - target: {fileID: 2829936042396028864, guid: 58a12bcae8179eb44b9dcab6f42f31b4,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     - target: {fileID: 8059159988569757061, guid: 58a12bcae8179eb44b9dcab6f42f31b4,
         type: 3}
       propertyPath: m_RootOrder
@@ -5884,6 +5979,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3836160999941047486, guid: 16bc6b05c381a54409fb995d9eb84f61,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     - target: {fileID: 3849024104098657823, guid: 16bc6b05c381a54409fb995d9eb84f61,
         type: 3}
       propertyPath: m_Name
@@ -6008,6 +6108,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5638476433410384601, guid: d9b04b4038143384498cddb2fecd3017,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     - target: {fileID: 5650143330656358520, guid: d9b04b4038143384498cddb2fecd3017,
         type: 3}
       propertyPath: m_Name
@@ -6077,6 +6182,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5811066902868744344, guid: e3097acae117ab2478e8d5ac3af381a4,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     - target: {fileID: 5833214377431640633, guid: e3097acae117ab2478e8d5ac3af381a4,
         type: 3}
       propertyPath: m_Name
@@ -6151,6 +6261,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LaunchSpeedUpgrade
       objectReference: {fileID: 0}
+    - target: {fileID: 8097581604864118854, guid: 7db4a4a979cb5e249b819877a5d7e7e5,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7db4a4a979cb5e249b819877a5d7e7e5, type: 3}
 --- !u!1001 &9092491706596687501
@@ -6160,6 +6275,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1779224114270311068, guid: 6cb94567ecaa61246ba0e6bfa35960f0,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     - target: {fileID: 1794581075484401725, guid: 6cb94567ecaa61246ba0e6bfa35960f0,
         type: 3}
       propertyPath: m_Name
@@ -6289,5 +6409,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaxSpeedUpgrade
       objectReference: {fileID: 0}
+    - target: {fileID: 6801266427879159797, guid: 583d1dcaca1dd814b8920365baeb4cae,
+        type: 3}
+      propertyPath: linkedProfile
+      value: 
+      objectReference: {fileID: 1221987072}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 583d1dcaca1dd814b8920365baeb4cae, type: 3}

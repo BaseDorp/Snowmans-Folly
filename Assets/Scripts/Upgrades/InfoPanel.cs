@@ -36,7 +36,7 @@ public class InfoPanel : MonoBehaviour
     public void UpdateInfo()
     {
         nameText.text = selectedUpgrade.UpgradeName;
-        statText.text = selectedUpgrade.UpgradeAmount.ToString()+"% increase.";
+        //statText.text = selectedUpgrade.UpgradeAmount.ToString()+"% increase.";
         descriptionText.text = selectedUpgrade.UpgradeDescription;
         costText.text = selectedUpgrade.UpgradeCost.ToString()+" coins";
         iconImage.sprite = selectedUpgrade.UpgradeIcon;
