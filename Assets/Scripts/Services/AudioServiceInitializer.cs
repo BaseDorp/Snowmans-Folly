@@ -9,7 +9,9 @@ using UnityEngine.Audio;
 /// </summary>
 public enum SoundEffect : byte
 {
-
+    ArcticWind,
+    Sliding,
+    SnowSplat
 }
 /// <summary>
 /// Identifies a background music track.
@@ -70,6 +72,14 @@ public sealed class AudioServiceInitializer : MonoBehaviour
 /// </summary>
 public static class AudioService
 {
+    #region Audio Parameters
+    private const string SOUND_EFFECTS_TRACK = "Sound Effects";
+    private const string BACKGROUND_MUSIC_TRACK = "Background Music";
+    #endregion
+    #region Debug Parameters
+    private const string NOT_INITIALIZED_MESSAGE =
+        "Tried to retrieve audio group before audio service was initialized";
+    #endregion
     #region Private Fields
     private static bool hasInitialized;
     private static AudioSource sfxSource;
@@ -77,6 +87,8 @@ public static class AudioService
     private static Dictionary<BackgroundTrack, AudioClip> backgroundTracks;
     private static Dictionary<SoundEffect, AudioClip[]> soundEffects;
     private static AudioMixer mixer;
+    private static AudioMixerGroup sfxGroup;
+    private static AudioMixerGroup bgmGroup;
     #endregion
     #region Initialization
     /// <summary>
@@ -104,9 +116,31 @@ public static class AudioService
             bgmSource = sceneObject.AddComponent<AudioSource>();
             sfxSource.loop = false;
             bgmSource.loop = true;
-            sfxSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Sound Effects")[0];
-            bgmSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Background Music")[0];
+            sfxGroup = sfxSource.outputAudioMixerGroup = mixer.FindMatchingGroups(SOUND_EFFECTS_TRACK)[0];
+            bgmGroup = bgmSource.outputAudioMixerGroup = mixer.FindMatchingGroups(BACKGROUND_MUSIC_TRACK)[0];
             hasInitialized = true;
+        }
+    }
+    #endregion
+    #region Exposed Properties
+    public static AudioMixerGroup SFXGroup
+    {
+        get
+        {
+            if (!hasInitialized)
+                throw new Exception(NOT_INITIALIZED_MESSAGE);
+            else
+                return sfxGroup;
+        }
+    }
+    public static AudioMixerGroup BGMGroup
+    {
+        get
+        {
+            if (!hasInitialized)
+                throw new Exception(NOT_INITIALIZED_MESSAGE);
+            else
+                return bgmGroup;
         }
     }
     #endregion
