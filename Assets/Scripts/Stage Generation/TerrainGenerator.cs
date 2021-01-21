@@ -109,14 +109,39 @@ public sealed class TerrainGenerator : MonoBehaviour
     }
     private void GenerateNextSegment()
     {
-        int nextSegment = typedIndices[TerrainSegmentType.Continuous].RandomElement();
-        terrainPools[nextSegment][poolCycleIndices[nextSegment]].SnapLeftTo(currentLocation);
-        newSegmentsToPass.Enqueue(terrainPools[nextSegment][poolCycleIndices[nextSegment]]);
-        currentLocation += terrainPools[nextSegment][poolCycleIndices[nextSegment]].DeltaPosition;
-        if (poolCycleIndices[nextSegment] < poolSize - 1)
-            poolCycleIndices[nextSegment]++;
+        Dictionary<int, float> segmentWeights =
+            new Dictionary<int, float>();
+        float totalWeight = 0f;
+
+        foreach (int index in typedIndices[TerrainSegmentType.Continuous])
+        {
+            if (currentLocation.y + terrainPools[index][0].DeltaPosition.y > transform.position.y)
+            {
+                segmentWeights.Add(index, 1f);
+                totalWeight += 1f;
+            }
+        }
+
+        float randomWeight = UnityEngine.Random.value * totalWeight;
+        int chosenIndex = 0;
+        float weightAccumulator = 0f;
+        foreach (KeyValuePair<int, float> weight in segmentWeights)
+        {
+            weightAccumulator += weight.Value;
+            if (weightAccumulator > randomWeight)
+            {
+                chosenIndex = weight.Key;
+                break;
+            }
+        }
+
+        terrainPools[chosenIndex][poolCycleIndices[chosenIndex]].SnapLeftTo(currentLocation);
+        newSegmentsToPass.Enqueue(terrainPools[chosenIndex][poolCycleIndices[chosenIndex]]);
+        currentLocation += terrainPools[chosenIndex][poolCycleIndices[chosenIndex]].DeltaPosition;
+        if (poolCycleIndices[chosenIndex] < poolSize - 1)
+            poolCycleIndices[chosenIndex]++;
         else
-            poolCycleIndices[nextSegment] = 0;
+            poolCycleIndices[chosenIndex] = 0;
     }
     private void Update()
     {

@@ -1850,12 +1850,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca8d59eceed4aa4194e353c4d93a2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlMode: 0
+  controlMode: 1
   body: {fileID: 1866331189}
   cosmeticsRoot: {fileID: 1565073121}
   launchPoint: {fileID: 1384841049}
   rampEndMarker: {fileID: 503645159}
-  outOfBoundsMarker: {fileID: 0}
+  outOfBoundsMarker: {fileID: 276224347}
   flightTransitionTime: 1
   baseFlapStrength: 5
   onLaunchBroadcaster: {fileID: 988251884}
