@@ -72,6 +72,7 @@ public sealed class SnowmanControl : MonoBehaviour
     #region Initialization
     private void Awake()
     {
+        PlayerService.AddPlayer(this);
         Mode = controlMode;
     }
     #endregion
