@@ -86,7 +86,7 @@ public abstract class Interactable : MonoBehaviour
         foreach (IntersectionState intersection in intersectionStates)
         {
             // Check the squared distance against the squared radius.
-            if ((intersection.player.transform.position - transform.position).sqrMagnitude < radiusSquared)
+            if (((Vector2)intersection.player.transform.position - (Vector2)transform.position).sqrMagnitude < radiusSquared)
             {
                 // If the state has flipped change the stored
                 // state and notify the sub-class.
