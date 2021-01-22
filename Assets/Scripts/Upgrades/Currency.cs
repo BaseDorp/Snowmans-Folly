@@ -1,15 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+// TODO convert this to a non-static pattern that
+// is owner by player instances.
+
 public class Currency : MonoBehaviour
 {
-    [SerializeField]
-    private Text coinText;
+    private static int coins;
+    public static int Coins
+    {
+        get => coins;
+        set
+        {
+            coins = value;
+            CoinCountChanged?.Invoke(coins);
+        }
+    }
 
-    public static int Coins;
-    public static float profitRate = 0.125f;
+    public static event Action<int> CoinCountChanged;
 
     void Awake()
     {
@@ -19,23 +30,5 @@ public class Currency : MonoBehaviour
     private static void SetupNewGame()
     {
         Coins = 100;
-    }
-
-    public static void AddRevenue(float distance)
-    {
-        Coins += (int)(profitRate * distance);
-    }
-
-    public static void Spend(int cost)
-    {
-        Coins -=  cost;
-    }
-
-    private void Update()
-    {
-        if(coinText!=null)
-        {
-            coinText.text = Coins.ToString();
-        }
     }
 }

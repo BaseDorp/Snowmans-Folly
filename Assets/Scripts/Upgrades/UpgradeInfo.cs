@@ -38,7 +38,7 @@ public class UpgradeInfo : MonoBehaviour
     {
         if(Currency.Coins>=upgradeCost)
         {
-            Currency.Spend(upgradeCost);
+            Currency.Coins -= upgradeCost;
             linkedProfile[upgradeStat].Level++;
         }
     }
