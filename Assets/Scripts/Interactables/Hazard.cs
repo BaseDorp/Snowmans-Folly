@@ -11,6 +11,6 @@ public class Hazard : Interactable
 
     public override void OnPlayerEnter(SnowmanControl player)
     {
-        player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x/velocityLoss, player.GetComponent<Rigidbody2D>().velocity.y);
+        player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x / velocityLoss, player.GetComponent<Rigidbody2D>().velocity.y);
     }
 }

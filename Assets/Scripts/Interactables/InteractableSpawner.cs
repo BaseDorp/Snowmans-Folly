@@ -59,7 +59,7 @@ public class InteractableSpawner : MonoBehaviour
         {
             if(RandomizeSpawn())
             {
-                //Spawn();
+                Spawn();
             }
             spawnLocation.y += ySpawnStagger;
         }
