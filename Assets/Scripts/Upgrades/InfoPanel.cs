@@ -46,4 +46,5 @@ public class InfoPanel : MonoBehaviour
     {
         selectedUpgrade.PurchaseUpgrade();
     }
+
 }

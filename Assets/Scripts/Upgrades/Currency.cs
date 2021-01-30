@@ -29,6 +29,6 @@ public class Currency : MonoBehaviour
 
     private static void SetupNewGame()
     {
-        Coins = 100;
+        //Coins = 100;
     }
 }

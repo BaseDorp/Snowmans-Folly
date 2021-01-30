@@ -27,6 +27,10 @@ public class InteractableSpawner : MonoBehaviour
     [SerializeField]
     private int spawnChance;
 
+    [Tooltip("The marker used to determine the lowest the interactables can spawn at.")]
+    [SerializeField]
+    private GameObject spawnPlane;
+
     private Vector2 playerLocation;
     private Vector2 lastPlayerSpawnLocation;
     private Vector2 spawnLocation;
@@ -90,7 +94,10 @@ public class InteractableSpawner : MonoBehaviour
                 float xSpawn = spawnLocation.x + (Random.Range(-2, 2));
                 float ySpawn = spawnLocation.y + (Random.Range(-1, 1));
                 Vector2 randomSpawnLocation = new Vector2(xSpawn, ySpawn);
-                Instantiate(interactables[randomInteractable], randomSpawnLocation,Quaternion.identity);
+                if(randomSpawnLocation.y>spawnPlane.transform.position.y)
+                {
+                    Instantiate(interactables[randomInteractable], randomSpawnLocation, Quaternion.identity);
+                }
             }
         }
     }
