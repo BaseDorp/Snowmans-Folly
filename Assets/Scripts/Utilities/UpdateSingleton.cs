@@ -19,7 +19,6 @@ public static class UpdateContext
         }
         remove
         {
-            CheckSingleton();
             monoBehavior.OnUpdate -= value;
         }
     }
@@ -44,10 +43,7 @@ public static class UpdateContext
     {
         public event Action OnUpdate;
         private void Update() { OnUpdate?.Invoke(); }
-        private void OnDestroy()
-        {
-            OnUpdate = null;
-        }
+        private void OnDestroy() { OnUpdate = null; }
     }
     #endregion
 }
