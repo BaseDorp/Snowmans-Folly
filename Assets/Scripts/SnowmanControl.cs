@@ -10,7 +10,7 @@ public sealed class SnowmanControl : MonoBehaviour
     /// <summary>
     /// This event is called whenever the snowman controller becomes disabled.
     /// </summary>
-    public event Action ControlDisabled;
+    public static event Action ControlDisabled;
 
     #region Local Enums
     /// <summary>

@@ -42,4 +42,9 @@ public class UpgradeInfo : MonoBehaviour
             linkedProfile[upgradeStat].Level++;
         }
     }
+
+    private void Awake()
+    {
+
+    }
 }

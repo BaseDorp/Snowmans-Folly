@@ -42,6 +42,8 @@ public abstract class Interactable : MonoBehaviour
     #region Initialization
     protected virtual void Awake()
     {
+        if (intersectionStates == null)
+            intersectionStates = new IntersectionState[0];
         // Capture the current players, and subscribe
         // to react to future changes in players.
         OnPlayersChanged(PlayerService.Players);
@@ -49,8 +51,6 @@ public abstract class Interactable : MonoBehaviour
         // Precalculate radius squared and initialize
         // intersections to avoid execution order null checks.
         radiusSquared = radius * radius;
-        if (intersectionStates == null)
-            intersectionStates = new IntersectionState[0];
     }
     #endregion
     #region Players Changed Listener
@@ -65,16 +65,24 @@ public abstract class Interactable : MonoBehaviour
             newStates[i] = new IntersectionState { player = controller };
             // Check to see if this player had any previous state.
             // This ensures adds/drops cannot interrupt a collision state.
-            foreach (IntersectionState priorState in intersectionStates)
+            try
             {
-                if (priorState.player == controller)
+                foreach (IntersectionState priorState in intersectionStates)
                 {
-                    // Ensure the new array contains the same collision state.
-                    newStates[i].isIntersecting = priorState.isIntersecting;
-                    break;
+                    if (priorState.player == controller)
+                    {
+                        // Ensure the new array contains the same collision state.
+                        newStates[i].isIntersecting = priorState.isIntersecting;
+                        break;
+                    }
                 }
+                i++;
             }
-            i++;
+            catch
+            {
+                float e = 2;
+            }
+            
         }
         intersectionStates = newStates;
     }
