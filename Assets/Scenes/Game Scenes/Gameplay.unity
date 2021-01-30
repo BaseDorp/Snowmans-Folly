@@ -247,7 +247,7 @@ EdgeCollider2D:
   m_GameObject: {fileID: 41256818}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3aed99cc3358dc849aa709d45b1fb7a4, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -458,7 +458,7 @@ EdgeCollider2D:
   m_GameObject: {fileID: 84940118}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3aed99cc3358dc849aa709d45b1fb7a4, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2917,6 +2917,7 @@ GameObject:
   - component: {fileID: 1866331190}
   - component: {fileID: 1866331189}
   - component: {fileID: 1866331188}
+  - component: {fileID: 1866331191}
   m_Layer: 0
   m_Name: Player Snowman
   m_TagString: Untagged
@@ -2949,7 +2950,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1866331186}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: b238d2eb47f7d344995f873d4d216d4a, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2989,8 +2990,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca8d59eceed4aa4194e353c4d93a2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 1866331191}
   controlMode: 1
   body: {fileID: 1866331189}
+  hitCircle: {fileID: 1866331188}
   cosmeticsRoot: {fileID: 1565073121}
   launchPoint: {fileID: 1384841049}
   rampEndMarker: {fileID: 503645159}
@@ -2999,6 +3002,55 @@ MonoBehaviour:
   baseFlapStrength: 5
   onLaunchBroadcaster: {fileID: 988251884}
   onWingFlapBroadcaster: {fileID: 1191914906}
+--- !u!114 &1866331191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866331186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9570d923cb7f3cd409dc122a3ec2d959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 0
+    maxLevel: 0
+    minValue: 0
+    maxValue: 0
+  - level: 5
+    maxLevel: 5
+    minValue: 0
+    maxValue: 0
+  - level: 5
+    maxLevel: 5
+    minValue: 0
+    maxValue: 1
 --- !u!1 &1909676297
 GameObject:
   m_ObjectHideFlags: 0

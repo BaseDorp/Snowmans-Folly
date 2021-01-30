@@ -46,7 +46,11 @@ public sealed class StatProfile : MonoBehaviour
 
     public Stat[] stats = new Stat[Enum.GetValues(typeof(StatType)).Length];
 
-
+    private void Awake()
+    {
+        foreach (Stat stat in stats)
+            stat.Level = stat.Level;
+    }
 
     private void OnValidate()
     {
