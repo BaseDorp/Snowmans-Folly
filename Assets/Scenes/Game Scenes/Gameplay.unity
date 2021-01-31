@@ -254,8 +254,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -1, y: 0}
-  - {x: 1, y: 0}
+  - {x: -2, y: 0}
+  - {x: 2, y: 0}
 --- !u!114 &41256820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,8 +465,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -1, y: 0}
-  - {x: 1, y: 0}
+  - {x: -2, y: 0}
+  - {x: 2, y: 0}
 --- !u!114 &84940120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,8 +931,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -1, y: 0}
-  - {x: 1, y: 0}
+  - {x: -2, y: 0}
+  - {x: 2, y: 0}
 --- !u!114 &336949110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2362,13 +2362,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384841048}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11, y: 15, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.5292995, w: 0.8484351}
+  m_LocalPosition: {x: -9.6, y: 11.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1960717258}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -63.916004}
 --- !u!1 &1433247803
 GameObject:
   m_ObjectHideFlags: 0
@@ -3038,10 +3038,10 @@ MonoBehaviour:
     maxLevel: 0
     minValue: 0
     maxValue: 0
-  - level: 0
-    maxLevel: 0
+  - level: 5
+    maxLevel: 5
     minValue: 0
-    maxValue: 0
+    maxValue: 40
   - level: 5
     maxLevel: 5
     minValue: 0

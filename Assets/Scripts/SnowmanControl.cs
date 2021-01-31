@@ -224,6 +224,7 @@ public sealed class SnowmanControl : MonoBehaviour
     private void OnLaunchPressed()
     {
         Mode = ControlMode.Sledding;
+        body.velocity = launchPoint.right * stats[StatType.LaunchSpeed].Value;
     }
     private void OnWingFlapPressed()
     {
