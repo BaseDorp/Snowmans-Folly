@@ -247,7 +247,7 @@ EdgeCollider2D:
   m_GameObject: {fileID: 41256818}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 3aed99cc3358dc849aa709d45b1fb7a4, type: 2}
+  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -458,7 +458,7 @@ EdgeCollider2D:
   m_GameObject: {fileID: 84940118}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 3aed99cc3358dc849aa709d45b1fb7a4, type: 2}
+  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -924,7 +924,7 @@ EdgeCollider2D:
   m_GameObject: {fileID: 336949106}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2950,7 +2950,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1866331186}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2973,7 +2973,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -2993,7 +2993,6 @@ MonoBehaviour:
   stats: {fileID: 1866331191}
   controlMode: 1
   body: {fileID: 1866331189}
-  hitCircle: {fileID: 1866331188}
   cosmeticsRoot: {fileID: 1565073121}
   launchPoint: {fileID: 1384841049}
   rampEndMarker: {fileID: 503645159}

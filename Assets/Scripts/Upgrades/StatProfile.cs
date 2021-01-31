@@ -17,10 +17,10 @@ public sealed class Stat
         get => level;
         set
         {
-            if (value <= maxLevel)
+            if (value <= maxLevel && value >= 0)
             {
                 level = value;
-                Value = Mathf.Lerp((float)level / maxLevel, minValue, maxValue);
+                Value = Mathf.Lerp(minValue, maxValue, (float)level / maxLevel);
             }
         }
     }
