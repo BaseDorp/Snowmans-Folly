@@ -28,7 +28,6 @@ public sealed class SnowmanControl : MonoBehaviour
     #region Local Fields
     private Vector2 currentNormal;
     private Vector2 normalsAccumulator;
-    private PhysicsMaterial2D physicsMaterial;
     #endregion
     #region Inspector Fields
     [Tooltip("The stats for this snowman controller.")]
@@ -38,8 +37,6 @@ public sealed class SnowmanControl : MonoBehaviour
     [Header("Actor Components")]
     [Tooltip("The body that drives the physics interactions for the controller.")]
     [SerializeField] private Rigidbody2D body = null;
-    [Tooltip("The circle collider for the snowman body.")]
-    [SerializeField] private CircleCollider2D hitCircle = null;
     [Tooltip("The root transform for all renderers.")]
     [SerializeField] private Transform cosmeticsRoot = null;
     [Header("Launch Parameters")]
@@ -78,13 +75,14 @@ public sealed class SnowmanControl : MonoBehaviour
     private void Awake()
     {
         PlayerService.AddPlayer(this);
-        physicsMaterial = new PhysicsMaterial2D();
-        hitCircle.sharedMaterial = physicsMaterial;
-        body.sharedMaterial = physicsMaterial;
         Mode = controlMode;
     }
     #endregion
     #region Properties
+    /// <summary>
+    /// The stats for this snowman controller.
+    /// </summary>
+    public StatProfile StatProfile { get => stats; }
     /// <summary>
     /// Whether the snowman is currently sliding along a surface.
     /// </summary>
@@ -103,8 +101,6 @@ public sealed class SnowmanControl : MonoBehaviour
             onWingFlapBroadcaster.Listener = null;
             // Set lowest common denominator values for all states.
             body.isKinematic = false;
-            physicsMaterial.friction = stats[StatType.Friction].Value;
-            physicsMaterial.bounciness = stats[StatType.Bounce].Value;
 
             // Initialize the state for each mode type.
             switch (value)
@@ -118,9 +114,6 @@ public sealed class SnowmanControl : MonoBehaviour
                     break;
                 case ControlMode.Sledding:
                     cosmeticsRoot.up = Vector3.up;
-                    // The physics material is muted while on the sled.
-                    physicsMaterial.friction = 0f;
-                    physicsMaterial.bounciness = 0f;
                     break;
                 case ControlMode.Flying:
                     cosmeticsRoot.up = Vector3.right;
@@ -141,6 +134,21 @@ public sealed class SnowmanControl : MonoBehaviour
     }
     #endregion
     #region Collisions Implementation
+    private Vector2 priorFrameVelocity;
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // This bounce threshold ensure that at some velocity
+        // the snowman will stop bouncing and begin sliding.
+        if (controlMode != ControlMode.Sledding
+            && priorFrameVelocity.y < -0.2f)
+        {
+            body.velocity = new Vector2
+            {
+                x = body.velocity.x,
+                y = -priorFrameVelocity.y * stats[StatType.Bounce].Value
+            };
+        }
+    }
     private void OnCollisionStay2D(Collision2D collision)
     {
         // Track and add up collision normals this fixed update.
@@ -163,6 +171,8 @@ public sealed class SnowmanControl : MonoBehaviour
         }
         // Reset the normals for next frame.
         normalsAccumulator = Vector2.zero;
+
+        priorFrameVelocity = body.velocity;
     }
     #endregion
     #region Update Implementation
