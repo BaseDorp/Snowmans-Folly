@@ -42,6 +42,7 @@ public enum StatType : byte
 
 public sealed class StatProfile : MonoBehaviour
 {
+
     public Stat this[StatType type] => stats[(int)type];
 
     public Stat[] stats = new Stat[Enum.GetValues(typeof(StatType)).Length];

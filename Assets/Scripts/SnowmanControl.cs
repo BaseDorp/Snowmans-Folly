@@ -47,10 +47,14 @@ public sealed class SnowmanControl : MonoBehaviour
     [Tooltip("Describes the world y location that defines the out of bounds plane.")]
     [SerializeField] private Transform outOfBoundsMarker = null;
     [Header("Flight Parameters")]
+    [Tooltip("The stamina system used during flight.")]
+    [SerializeField] private StaminaSystem staminaSystem = null;
     [Tooltip("Seconds elapsed to transition from sledding to flight.")]
     [SerializeField] private float flightTransitionTime = 0f;
     [Tooltip("Determines the base strength of the flapping control.")]
     [SerializeField] private float baseFlapStrength = 0f;
+    [Tooltip("The amount of stamina required to flap.")]
+    [SerializeField] private float staminaUsePerFlap = 30f;
     [Header("Input Channels")]
     [Tooltip("The button broadcaster for when the player should launch.")]
     [SerializeField] private ButtonDownBroadcaster onLaunchBroadcaster = null;
@@ -72,7 +76,7 @@ public sealed class SnowmanControl : MonoBehaviour
     #endregion
 #endif
     #region Initialization
-    private void Awake()
+    private void Start()
     {
         PlayerService.AddPlayer(this);
         Mode = controlMode;
@@ -111,6 +115,9 @@ public sealed class SnowmanControl : MonoBehaviour
                     transform.position = launchPoint.position;
                     body.isKinematic = true;
                     body.velocity = Vector2.zero;
+                    // Ensure stats are up to date. TODO should not be in this setter.
+                    staminaSystem.MaxStamina = stats[StatType.Propulsion].Value;
+                    staminaSystem.Stamina = staminaSystem.MaxStamina;
                     break;
                 case ControlMode.Sledding:
                     cosmeticsRoot.up = Vector3.up;
@@ -224,24 +231,29 @@ public sealed class SnowmanControl : MonoBehaviour
     private void OnLaunchPressed()
     {
         Mode = ControlMode.Sledding;
+        body.velocity = launchPoint.right * stats[StatType.LaunchSpeed].Value;
     }
     private void OnWingFlapPressed()
     {
-        if (body.velocity.y < 0f)
+        if (staminaSystem.Stamina > staminaUsePerFlap)
         {
-            body.velocity = new Vector2
+            staminaSystem.Stamina -= staminaUsePerFlap;
+            if (body.velocity.y < 0f)
             {
-                x = body.velocity.x,
-                y = baseFlapStrength
-            };
-        }
-        else
-        {
-            body.velocity = new Vector2
+                body.velocity = new Vector2
+                {
+                    x = body.velocity.x,
+                    y = baseFlapStrength
+                };
+            }
+            else
             {
-                x = body.velocity.x,
-                y = body.velocity.y + baseFlapStrength
-            };
+                body.velocity = new Vector2
+                {
+                    x = body.velocity.x,
+                    y = body.velocity.y + baseFlapStrength
+                };
+            }
         }
     }
     #endregion
