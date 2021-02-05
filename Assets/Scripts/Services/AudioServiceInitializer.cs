@@ -11,14 +11,20 @@ public enum SoundEffect : byte
 {
     ArcticWind,
     Sliding,
-    SnowSplat
+    SnowSplat,
+    CrashFall,
+    CrashShatter,
+    PowerupChime,
+    PowerupCoin,
+    PowerupCookie
 }
 /// <summary>
 /// Identifies a background music track.
 /// </summary>
 public enum BackgroundTrack : byte
 {
-    JingleRockin
+    JingleRockin,
+    SnowSurfin
 }
 #endregion
 
