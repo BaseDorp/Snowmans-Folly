@@ -813,6 +813,36 @@ MonoBehaviour:
   recordText: {fileID: 758176092}
   zeroDistanceMarker: {fileID: 503645159}
   distanceTransform: {fileID: 1866331187}
+--- !u!1 &82159863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82159864}
+  m_Layer: 0
+  m_Name: Interactables
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &82159864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82159863}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.66922575, y: 1.354318, z: -109.515114}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &84940118
 GameObject:
   m_ObjectHideFlags: 0
@@ -5297,7 +5327,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &951690125
 Transform:
   m_ObjectHideFlags: 0
@@ -8704,6 +8734,7 @@ MonoBehaviour:
   xSpawnStagger: 10
   spawnChance: 4
   spawnPlane: {fileID: 1198340608}
+  interactableParent: {fileID: 82159864}
 --- !u!1 &1909676297
 GameObject:
   m_ObjectHideFlags: 0
