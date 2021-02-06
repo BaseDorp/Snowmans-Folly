@@ -12,20 +12,49 @@ public class StaminaBoost : Interactable
     [SerializeField]
     [Range(0,100)]
     private float staminaPercentGain;
-    [Tooltip("If true, will use percent gain")]
+    [Tooltip("How long infinite stamina should last.")]
     [SerializeField]
-    private bool usePercentGain;
+    private float infiniteStaminaDuration;
+    [Tooltip("What type of stamina powerup")]
+    [SerializeField]
+    private StaminaType staminaType;
+
+    public enum StaminaType { flat,percent,infinite}
+
+    private StaminaSystem storedPlayerStamina;
+    private bool infiniteActivated;
 
     public override void OnPlayerEnter(SnowmanControl player)
     {
-        if(usePercentGain)
+        storedPlayerStamina = player.GetComponent<StaminaSystem>();
+        switch (staminaType)
         {
-            player.GetComponent<StaminaSystem>().Stamina += player.GetComponent<StaminaSystem>().MaxStamina*(staminaPercentGain/100);
+            case StaminaType.percent:
+                storedPlayerStamina.Stamina += storedPlayerStamina.MaxStamina * (staminaPercentGain / 100);
+                break;
+            case StaminaType.flat:
+                storedPlayerStamina.Stamina += staminaFlatGain;
+                break;
+            case StaminaType.infinite:
+                infiniteActivated = true;
+                StartCoroutine(InfiniteTimer());
+                return;
         }
-        else
+        Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        if(infiniteActivated)
         {
-            player.GetComponent<StaminaSystem>().Stamina += staminaFlatGain;
+            storedPlayerStamina.Stamina = storedPlayerStamina.MaxStamina;
         }
+    }
+
+    private IEnumerator InfiniteTimer()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        yield return new WaitForSeconds(infiniteStaminaDuration);
         Destroy(gameObject);
     }
 }
