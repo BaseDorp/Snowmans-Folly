@@ -14,6 +14,8 @@ public sealed class CoinReadout : MonoBehaviour
     [SerializeField] private TMP_Text currentRunText = null;
     [Tooltip("The text for the total coins.")]
     [SerializeField] private TMP_Text totalText = null;
+    [Tooltip("The text that will update the shops display of coins.")]
+    [SerializeField] private TMP_Text coinsText;
     #endregion
     #region Private Fields
     private int coinsAtStartOfRun;
@@ -52,6 +54,7 @@ public sealed class CoinReadout : MonoBehaviour
         // Update the values of both counters.
         currentRunText.text = (newCoins - coinsAtStartOfRun).ToString();
         totalText.text = $"{TOTAL_PREFIX}{newCoins}";
+        coinsText.text = $"{newCoins}";
     }
     #endregion
 }
