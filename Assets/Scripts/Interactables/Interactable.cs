@@ -115,6 +115,14 @@ public abstract class Interactable : MonoBehaviour
         }
     }
     #endregion
+    private void Update()
+    {
+        // If the camera has gone past the interactable, destroy it.
+        if (Camera.main.WorldToViewportPoint(transform.position).x < 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
     #region Subclass Listeners
     /// <summary>
     /// Called when a player enters the trigger region.
