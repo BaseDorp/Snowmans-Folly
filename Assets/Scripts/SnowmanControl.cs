@@ -11,6 +11,10 @@ public sealed class SnowmanControl : MonoBehaviour
     /// This event is called whenever the snowman controller becomes disabled.
     /// </summary>
     public static event Action ControlDisabled;
+    /// <summary>
+    /// This event is called whenever the snowman begins launching. 
+    /// </summary>
+    public static event Action Launched;
 
     #region Local Enums
     /// <summary>
@@ -118,6 +122,7 @@ public sealed class SnowmanControl : MonoBehaviour
                     // Ensure stats are up to date. TODO should not be in this setter.
                     staminaSystem.MaxStamina = stats[StatType.Propulsion].Value;
                     staminaSystem.Stamina = staminaSystem.MaxStamina;
+                    Launched?.Invoke();
                     break;
                 case ControlMode.Sledding:
                     cosmeticsRoot.up = Vector3.up;

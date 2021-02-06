@@ -31,6 +31,10 @@ public class InteractableSpawner : MonoBehaviour
     [SerializeField]
     private GameObject spawnPlane;
 
+    [Tooltip("The parent component for the instantiated interactables.")]
+    [SerializeField]
+    private Transform interactableParent;
+
     private Vector2 playerLocation;
     private Vector2 lastPlayerSpawnLocation;
     private Vector2 spawnLocation;
@@ -40,6 +44,11 @@ public class InteractableSpawner : MonoBehaviour
     {
         playerLocation = this.gameObject.transform.position;
         lastPlayerSpawnLocation = playerLocation;
+    }
+
+    private void OnEnable()
+    {
+        SnowmanControl.Launched += ResetInteractables;
     }
 
     // Update is called once per frame
@@ -96,10 +105,30 @@ public class InteractableSpawner : MonoBehaviour
                 Vector2 randomSpawnLocation = new Vector2(xSpawn, ySpawn);
                 if(randomSpawnLocation.y>spawnPlane.transform.position.y)
                 {
-                    Instantiate(interactables[randomInteractable], randomSpawnLocation, Quaternion.identity);
+                    Instantiate(interactables[randomInteractable], randomSpawnLocation, Quaternion.identity,interactableParent);
                 }
             }
         }
     }
 
+    public void ResetInteractables()
+    {
+        ClearInteractables();
+        lastPlayerSpawnLocation = transform.position;
+    }
+
+    public void ClearInteractables()
+    {
+        GameObject[] spawnedInteractables = new GameObject[interactableParent.childCount];
+        int x = 0;
+        foreach(Transform interactable in interactableParent)
+        {
+            spawnedInteractables[x] = interactable.gameObject;
+            x++;
+        }
+        foreach(GameObject interactable in spawnedInteractables)
+        {
+            Destroy(interactable);
+        }
+    }
 }

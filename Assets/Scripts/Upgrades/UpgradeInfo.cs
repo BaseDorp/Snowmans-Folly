@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class UpgradeInfo : MonoBehaviour
 {
-
-    [SerializeField]
-    private StatProfile linkedProfile = null;
-
     [Tooltip("The name of the object as it will appear in the menu UI.")]
     [SerializeField]
     private string upgradeName;
@@ -34,17 +30,16 @@ public class UpgradeInfo : MonoBehaviour
     public StatType UpgradeStat => upgradeStat;
     public int UpgradeCost => upgradeCost;
 
-    public void PurchaseUpgrade()
+    public void PurchaseUpgrade(StatProfile snowmanProfile)
     {
         if(Currency.Coins>=upgradeCost)
         {
             Currency.Coins -= upgradeCost;
-            linkedProfile[upgradeStat].Level++;
+            snowmanProfile[upgradeStat].Level++;
         }
     }
 
     private void Awake()
     {
-
     }
 }
