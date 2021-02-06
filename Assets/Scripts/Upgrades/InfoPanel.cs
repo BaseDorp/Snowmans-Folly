@@ -25,6 +25,9 @@ public class InfoPanel : MonoBehaviour
     [SerializeField]
     private Image iconImage;
 
+    [SerializeField]
+    StatProfile snowmanProfile;
+
     private UpgradeInfo selectedUpgrade;
 
     public void SetUpgrade(UpgradeInfo newUpgrade)
@@ -44,7 +47,7 @@ public class InfoPanel : MonoBehaviour
 
     public void PurchaseSelectedUpgrade()
     {
-        selectedUpgrade.PurchaseUpgrade();
+        selectedUpgrade.PurchaseUpgrade(snowmanProfile);
     }
 
 }

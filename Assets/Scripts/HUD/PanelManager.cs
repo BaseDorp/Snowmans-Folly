@@ -16,6 +16,11 @@ public class PanelManager : MonoBehaviour
         SnowmanControl.ControlDisabled += ShowPanel;
     }
 
+    private void Start()
+    {
+        HidePanel();
+    }
+
     public void ShowPanel()
     {
         upgradePanel.SetActive(true);
