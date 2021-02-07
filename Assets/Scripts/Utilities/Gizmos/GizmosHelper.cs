@@ -28,4 +28,21 @@ public static class GizmosHelper
             }
         }
     }
+
+    private const int CIRCLE_DIVISIONS = 32;
+    public static void DrawCircle(Vector2 center, float radius)
+    {
+        Vector2 previous = Vector2.up * radius;
+        for (int i = 1; i <= CIRCLE_DIVISIONS; i++)
+        {
+            float angle = (Mathf.PI * 2f) * ((float)i / CIRCLE_DIVISIONS);
+            Vector2 current = new Vector2
+            {
+                x = Mathf.Sin(angle) * radius,
+                y = Mathf.Cos(angle) * radius
+            };
+            Gizmos.DrawLine(center + previous, center + current);
+            previous = current;
+        }
+    }
 }

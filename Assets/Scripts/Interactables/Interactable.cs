@@ -93,8 +93,20 @@ public abstract class Interactable : MonoBehaviour
         // Check each registered player.
         foreach (IntersectionState intersection in intersectionStates)
         {
-            // Check the squared distance against the squared radius.
-            if (((Vector2)intersection.player.transform.position - (Vector2)transform.position).sqrMagnitude < radiusSquared)
+            bool foundHit = false;
+            // Check the circle regions on the player.
+            foreach (CircleRegion region in intersection.player.HitCircles)
+            {
+                // If their radii intersect then report a hit.
+                if (((Vector2)intersection.player.transform.position + region.position
+                    - (Vector2)transform.position).sqrMagnitude
+                    < radiusSquared + region.radius * region.radius)
+                {
+                    foundHit = true;
+                    break;
+                }
+            }
+            if (foundHit)
             {
                 // If the state has flipped change the stored
                 // state and notify the sub-class.

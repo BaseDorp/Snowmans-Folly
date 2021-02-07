@@ -3,6 +3,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEditor;
 
+[Serializable]
+public sealed class CircleRegion
+{
+    public Vector2 position = Vector2.zero;
+    public float radius = 1f;
+}
+
 /// <summary>
 /// Processes input and applies control to the snowman actor.
 /// </summary>
@@ -51,6 +58,9 @@ public sealed class SnowmanControl : MonoBehaviour
     [SerializeField] private Transform cosmeticsRoot = null;
     [Tooltip("The transform pivot for the head.")]
     [SerializeField] private Transform headPivot = null;
+    [Header("Collision Parameters")]
+    [Tooltip("Controls the visual collision parameters for interactables.")]
+    [SerializeField] private CircleRegion[] hitCircles = null;
     [Header("Animation Parameters")]
     [Tooltip("The animator that drives the snowman cosmetics.")]
     [SerializeField] private Animator animator = null;
@@ -79,6 +89,12 @@ public sealed class SnowmanControl : MonoBehaviour
     [SerializeField] private ButtonDownBroadcaster onLaunchBroadcaster = null;
     [Tooltip("The button broadcaster for when the player should flap to gain altitude.")]
     [SerializeField] private ButtonDownBroadcaster onWingFlapBroadcaster = null;
+    private void OnValidate()
+    {
+        if (hitCircles != null)
+            foreach (CircleRegion circle in hitCircles)
+                circle.radius.Clamp(0.1f, float.MaxValue);
+    }
     #endregion
 #if DEBUG
     #region Gizmos Implementation
@@ -91,6 +107,10 @@ public sealed class SnowmanControl : MonoBehaviour
             GizmosHelper.DrawAsymptote(rampEndMarker.position.x);
             Handles.Label(rampEndMarker.position + Vector3.right * 0.5f, "Ramp End");
         }
+        Gizmos.color = Color.red;
+        if (hitCircles != null)
+            foreach (CircleRegion circle in hitCircles)
+                GizmosHelper.DrawCircle((Vector2)transform.position + circle.position, circle.radius);
     }
     #endregion
 #endif
@@ -165,6 +185,13 @@ public sealed class SnowmanControl : MonoBehaviour
             }
             controlMode = value;
         }
+    }
+    /// <summary>
+    /// Represents the local circles associated with visual collision.
+    /// </summary>
+    public CircleRegion[] HitCircles
+    {
+        get => hitCircles;
     }
     #endregion
     #region Collisions Implementation
