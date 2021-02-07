@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEditor;
 
@@ -32,6 +33,11 @@ public sealed class SnowmanControl : MonoBehaviour
     #region Local Fields
     private Vector2 currentNormal;
     private Vector2 normalsAccumulator;
+    private int flapStateHash;
+    // These are used to track a simple simulation
+    // of the sled as it departs from the player.
+    private Vector2 sledVelocity;
+    private Vector2 sledPosition;
     #endregion
     #region Inspector Fields
     [Tooltip("The stats for this snowman controller.")]
@@ -43,6 +49,13 @@ public sealed class SnowmanControl : MonoBehaviour
     [SerializeField] private Rigidbody2D body = null;
     [Tooltip("The root transform for all renderers.")]
     [SerializeField] private Transform cosmeticsRoot = null;
+    [Tooltip("The transform pivot for the head.")]
+    [SerializeField] private Transform headPivot = null;
+    [Header("Animation Parameters")]
+    [Tooltip("The animator that drives the snowman cosmetics.")]
+    [SerializeField] private Animator animator = null;
+    [Tooltip("The name associated with triggering a wing flap.")]
+    [SerializeField] private string wingFlapStateName = string.Empty;
     [Header("Launch Parameters")]
     [Tooltip("Describes the location and orientation that the actor is returned to during launch.")]
     [SerializeField] private Transform launchPoint = null;
@@ -50,11 +63,13 @@ public sealed class SnowmanControl : MonoBehaviour
     [SerializeField] private Transform rampEndMarker = null;
     [Tooltip("Describes the world y location that defines the out of bounds plane.")]
     [SerializeField] private Transform outOfBoundsMarker = null;
+    [Tooltip("The sprite renderer for the sled.")]
+    [SerializeField] private SpriteRenderer sledRenderer = null;
     [Header("Flight Parameters")]
     [Tooltip("The stamina system used during flight.")]
     [SerializeField] private StaminaSystem staminaSystem = null;
-    [Tooltip("Seconds elapsed to transition from sledding to flight.")]
-    [SerializeField] private float flightTransitionTime = 0f;
+    [Tooltip("Controls the damping factor on the rotation of the snowman.")]
+    [SerializeField] private float flightDampingFactor = 5f;
     [Tooltip("Determines the base strength of the flapping control.")]
     [SerializeField] private float baseFlapStrength = 0f;
     [Tooltip("The amount of stamina required to flap.")]
@@ -84,6 +99,7 @@ public sealed class SnowmanControl : MonoBehaviour
     {
         PlayerService.AddPlayer(this);
         Mode = controlMode;
+        flapStateHash = Animator.StringToHash(wingFlapStateName);
     }
     #endregion
     #region Properties
@@ -102,7 +118,6 @@ public sealed class SnowmanControl : MonoBehaviour
     {
         set
         {
-            controlMode = value;
             // Clear all input channels, before applying them
             // in the context of each mode.
             onLaunchBroadcaster.Listener = null;
@@ -122,13 +137,19 @@ public sealed class SnowmanControl : MonoBehaviour
                     // Ensure stats are up to date. TODO should not be in this setter.
                     staminaSystem.MaxStamina = stats[StatType.Propulsion].Value;
                     staminaSystem.Stamina = staminaSystem.MaxStamina;
+                    sledRenderer.enabled = true;
                     Launched?.Invoke();
                     break;
                 case ControlMode.Sledding:
                     cosmeticsRoot.up = Vector3.up;
                     break;
                 case ControlMode.Flying:
-                    cosmeticsRoot.up = Vector3.right;
+                    if (controlMode == ControlMode.Sledding)
+                    {
+                        sledVelocity = body.velocity;
+                        sledPosition = sledRenderer.transform.position;
+                        StartCoroutine(DetachSled());
+                    }
                     onWingFlapBroadcaster.Listener = OnWingFlapPressed;
                     break;
                 case ControlMode.Sliding:
@@ -142,6 +163,7 @@ public sealed class SnowmanControl : MonoBehaviour
                 default:
                     throw new NotImplementedException();
             }
+            controlMode = value;
         }
     }
     #endregion
@@ -190,6 +212,14 @@ public sealed class SnowmanControl : MonoBehaviour
     #region Update Implementation
     private void Update()
     {
+        // Update common stuff.
+        if (body.velocity.magnitude > 0.2f)
+        {
+            headPivot.right = Vector3.Slerp(
+                headPivot.right,
+                body.velocity.normalized,
+                flightDampingFactor * Time.deltaTime);
+        }
         // Switch drawing procedure based on state.
         switch (controlMode)
         {
@@ -214,6 +244,11 @@ public sealed class SnowmanControl : MonoBehaviour
             else if (body.position.y < outOfBoundsMarker.position.y
                 || body.velocity.x < 0f)
                 Mode = ControlMode.Disabled;
+            // Add a smoothing function to prevent abrupt cosmetic changes.
+            cosmeticsRoot.up = Vector3.Slerp(
+                cosmeticsRoot.up,
+                body.velocity.normalized,
+                flightDampingFactor * Time.deltaTime);
         }
         void UpdateSliding()
         {
@@ -232,6 +267,28 @@ public sealed class SnowmanControl : MonoBehaviour
         }
     }
     #endregion
+    #region Sled Detach Routine
+    private IEnumerator DetachSled()
+    {
+        // Local state of the transform needs to be stored
+        // so the sled can be reset. TODO this is kinda hacky.
+        Transform sledParent = sledRenderer.transform.parent;
+        Vector3 localPosition = sledRenderer.transform.localPosition;
+        Quaternion localRotation = sledRenderer.transform.localRotation;
+        sledRenderer.transform.parent = null;
+        while (sledRenderer.transform.position.y > outOfBoundsMarker.position.y)
+        {
+            sledVelocity += Vector2.up * Physics2D.gravity * Time.deltaTime;
+            sledPosition += sledVelocity * Time.deltaTime;
+            sledRenderer.transform.position = sledPosition;
+            yield return null;
+        }
+        sledRenderer.enabled = false;
+        sledRenderer.transform.parent = sledParent;
+        sledRenderer.transform.localPosition = localPosition;
+        sledRenderer.transform.rotation = localRotation;
+    }
+    #endregion
     #region Input Listeners
     private void OnLaunchPressed()
     {
@@ -242,6 +299,7 @@ public sealed class SnowmanControl : MonoBehaviour
     {
         if (staminaSystem.Stamina > staminaUsePerFlap)
         {
+            // Exhaust stamina and update velocity.
             staminaSystem.Stamina -= staminaUsePerFlap;
             if (body.velocity.y < 0f)
             {
@@ -259,6 +317,8 @@ public sealed class SnowmanControl : MonoBehaviour
                     y = body.velocity.y + baseFlapStrength
                 };
             }
+            // Play the wing flap animation.
+            animator.Play(flapStateHash, 0, 0f);
         }
     }
     #endregion
