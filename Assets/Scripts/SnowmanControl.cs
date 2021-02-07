@@ -41,6 +41,7 @@ public sealed class SnowmanControl : MonoBehaviour
     private Vector2 currentNormal;
     private Vector2 normalsAccumulator;
     private int flapStateHash;
+    private float currentBounceEffectiveness;
     // These are used to track a simple simulation
     // of the sled as it departs from the player.
     private Vector2 sledVelocity;
@@ -84,6 +85,11 @@ public sealed class SnowmanControl : MonoBehaviour
     [SerializeField] private float baseFlapStrength = 0f;
     [Tooltip("The amount of stamina required to flap.")]
     [SerializeField] private float staminaUsePerFlap = 30f;
+    [Header("Bounce Parameters")]
+    [Tooltip("Controls how the bounce effectiveness decays with each bounce.")]
+    [SerializeField][Range(0f, 1f)] private float bounceDecayFactor = 0.9f;
+    [Tooltip("At this bounce effectiveness the snowman body will no longer bounce.")]
+    [SerializeField][Range(0f, 1f)] private float minBounceFactor = 0.1f;
     [Header("Input Channels")]
     [Tooltip("The button broadcaster for when the player should launch.")]
     [SerializeField] private ButtonDownBroadcaster onLaunchBroadcaster = null;
@@ -120,6 +126,7 @@ public sealed class SnowmanControl : MonoBehaviour
         PlayerService.AddPlayer(this);
         Mode = controlMode;
         flapStateHash = Animator.StringToHash(wingFlapStateName);
+        currentBounceEffectiveness = 1f;
     }
     #endregion
     #region Properties
@@ -178,6 +185,8 @@ public sealed class SnowmanControl : MonoBehaviour
                 case ControlMode.Disabled:
                     body.isKinematic = true;
                     body.velocity = Vector2.zero;
+                    // TODO this should not be here.
+                    currentBounceEffectiveness = 1f;
                     ControlDisabled?.Invoke();
                     break;
                 default:
@@ -198,16 +207,25 @@ public sealed class SnowmanControl : MonoBehaviour
     private Vector2 priorFrameVelocity;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // This bounce threshold ensure that at some velocity
-        // the snowman will stop bouncing and begin sliding.
+        // A threshold is placed here to prevent state from
+        // flipping each frame in low number physics weirdness.
         if (controlMode != ControlMode.Sledding
             && priorFrameVelocity.y < -0.2f)
         {
-            body.velocity = new Vector2
+            // Stop bouncing at some point.
+            if (currentBounceEffectiveness > minBounceFactor)
             {
-                x = body.velocity.x,
-                y = -priorFrameVelocity.y * stats[StatType.Bounce].Value
-            };
+                // Reverse the velocity along the Y,
+                // with intensity based on the bounce stat.
+                body.velocity = new Vector2
+                {
+                    x = body.velocity.x,
+                    y = -priorFrameVelocity.y * stats[StatType.Bounce].Value
+                        * currentBounceEffectiveness
+                };
+                // Make the next bounce less effective.
+                currentBounceEffectiveness *= bounceDecayFactor;
+            }
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
