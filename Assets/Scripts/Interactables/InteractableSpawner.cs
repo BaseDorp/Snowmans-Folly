@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class InteractableSpawner : MonoBehaviour
 {
+
+    [Tooltip("The stats for this snowman.")]
+    [SerializeField]
+    private StatProfile stats;
+
     [Tooltip("How far to the right of the player can interactables spawn.")]
     [SerializeField]
     private float xSpawnDistance;
@@ -44,14 +49,18 @@ public class InteractableSpawner : MonoBehaviour
     [Header("Spawn rates, must total 100")]
     [Tooltip("Percentage, max of 100")]
     [SerializeField]
+    private int baseHazardSpawnRate;
+
+    [Tooltip("Percentage, max of 100")]
+    [SerializeField]
+    private int basePowerupSpawnRate;
+
+    [Tooltip("Percentage, max of 100")]
+    [SerializeField]
+    private int baseCoinSpawnRate;
+
     private int hazardSpawnRate;
-
-    [Tooltip("Percentage, max of 100")]
-    [SerializeField]
     private int powerupSpawnRate;
-
-    [Tooltip("Percentage, max of 100")]
-    [SerializeField]
     private int coinSpawnRate;
 
     private Vector2 playerLocation;
@@ -63,6 +72,9 @@ public class InteractableSpawner : MonoBehaviour
     {
         playerLocation = this.gameObject.transform.position;
         lastPlayerSpawnLocation = playerLocation;
+        hazardSpawnRate = baseHazardSpawnRate;
+        powerupSpawnRate = basePowerupSpawnRate;
+        coinSpawnRate = baseCoinSpawnRate;
         BalancePercentage();
     }
 
@@ -173,6 +185,12 @@ public class InteractableSpawner : MonoBehaviour
     {
         ClearInteractables();
         lastPlayerSpawnLocation = transform.position;
+
+        //As the player improves luck, hazard spawn goes down and powerup spawn goes up
+        hazardSpawnRate = baseHazardSpawnRate-(int)stats[StatType.Luck].Value;
+        powerupSpawnRate = basePowerupSpawnRate + (int)stats[StatType.Luck].Value;
+        coinSpawnRate = baseCoinSpawnRate;
+
     }
 
     public void ClearInteractables()

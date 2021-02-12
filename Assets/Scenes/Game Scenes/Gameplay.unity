@@ -11669,9 +11669,9 @@ MonoBehaviour:
     minValue: 100
     maxValue: 300
   - level: 0
-    maxLevel: 0
+    maxLevel: 5
     minValue: 0
-    maxValue: 0
+    maxValue: 20
   - level: 0
     maxLevel: 0
     minValue: 0
@@ -11720,6 +11720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035171889e36b24bb15550b3229af77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 1866331191}
   xSpawnDistance: 20
   ySpawnDistance: 40
   ySpawnStagger: 5
@@ -11736,9 +11737,9 @@ MonoBehaviour:
   - {fileID: 749060520054061487, guid: 277baf2ac1ad39e4188319aab37cdd7b, type: 3}
   coins:
   - {fileID: 2035371766157916566, guid: f1b5ad741dfaa0b4b886dd214e5836b2, type: 3}
-  hazardSpawnRate: 40
-  powerupSpawnRate: 10
-  coinSpawnRate: 50
+  baseHazardSpawnRate: 40
+  basePowerupSpawnRate: 10
+  baseCoinSpawnRate: 50
 --- !u!1 &1877280658
 GameObject:
   m_ObjectHideFlags: 0
