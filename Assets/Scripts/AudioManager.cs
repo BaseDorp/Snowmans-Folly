@@ -76,4 +76,21 @@ public class AudioManager : MonoBehaviour
         PlayBGM(bgmClips[x]);
     }
 
+    public void SetBGMVolume()
+    {
+    }
+
+    public void SetSFXVolume()
+    {
+    }
+
+    public void ToggleBGMMute()
+    {
+            bgmSource.mute = !bgmSource.mute;
+    }
+
+    public void ToggleSFXMute()
+    {
+        sfxSource.mute = !sfxSource.mute;
+    }
 }
