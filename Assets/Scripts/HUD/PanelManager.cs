@@ -19,7 +19,7 @@ public class PanelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SnowmanControl.ControlDisabled += OpenShop;
+        SnowmanControl.ControlDisabled += DisplayShop;
     }
 
     private void Start()
@@ -50,7 +50,7 @@ public class PanelManager : MonoBehaviour
         Panel.SetActive(false);
     }
 
-    public void OpenShop()
+    public void DisplayShop()
     {
         ShowPanel(upgradePanel);
         HidePanel(menuPanel);
@@ -68,8 +68,8 @@ public class PanelManager : MonoBehaviour
 
     public void DisplayMenu()
     {
-        ShowPanel(creditsPanel);
-        HidePanel(menuPanel);
+        ShowPanel(menuPanel);
+        HidePanel(creditsPanel);
         HidePanel(upgradePanel);
         HidePanel(gameplayPanel);
     }
