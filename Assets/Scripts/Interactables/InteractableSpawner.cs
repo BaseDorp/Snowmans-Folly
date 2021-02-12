@@ -35,6 +35,19 @@ public class InteractableSpawner : MonoBehaviour
     [SerializeField]
     private Transform interactableParent;
 
+    [Header("Spawn rates, must total 100")]
+    [Tooltip("Percentage, max of 100")]
+    [SerializeField]
+    private int hazardSpawnRate;
+
+    [Tooltip("Percentage, max of 100")]
+    [SerializeField]
+    private int powerupSpawnRate;
+
+    [Tooltip("Percentage, max of 100")]
+    [SerializeField]
+    private int coinSpawnRate;
+
     private Vector2 playerLocation;
     private Vector2 lastPlayerSpawnLocation;
     private Vector2 spawnLocation;
@@ -44,6 +57,24 @@ public class InteractableSpawner : MonoBehaviour
     {
         playerLocation = this.gameObject.transform.position;
         lastPlayerSpawnLocation = playerLocation;
+        while(hazardSpawnRate+powerupSpawnRate+coinSpawnRate>100)
+        {
+            if(hazardSpawnRate>0)
+            {
+                hazardSpawnRate -= 1;
+            }
+            else if(powerupSpawnRate>0)
+            {
+                powerupSpawnRate -= 1;
+            }
+            else
+            {
+                coinSpawnRate -= 1;
+            }
+        }
+        Debug.Log("Hazard: " + hazardSpawnRate);
+        Debug.Log("Powerup: " + powerupSpawnRate);
+        Debug.Log("Luck: " + coinSpawnRate);
     }
 
     private void OnEnable()

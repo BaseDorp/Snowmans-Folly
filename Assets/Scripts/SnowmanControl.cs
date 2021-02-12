@@ -210,9 +210,10 @@ public sealed class SnowmanControl : MonoBehaviour
     /// <param name="force">The intensity of the force.</param>
     public void ApplySlowingForce(float force)
     {
+        Debug.Log(stats[StatType.Durability].Value);
         body.velocity = new Vector2
         {
-            x = body.velocity.x / (force * stats[StatType.Durability].Value),
+            x = body.velocity.x / (1 + (force/2 * (2-stats[StatType.Durability].Value))),
             y = body.velocity.y
         };
     }
