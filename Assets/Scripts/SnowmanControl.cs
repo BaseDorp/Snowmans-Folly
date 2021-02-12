@@ -203,6 +203,20 @@ public sealed class SnowmanControl : MonoBehaviour
         get => hitCircles;
     }
     #endregion
+    #region Public Methods
+    /// <summary>
+    /// Applys a leftwards slowing force against the snowman.
+    /// </summary>
+    /// <param name="force">The intensity of the force.</param>
+    public void ApplySlowingForce(float force)
+    {
+        body.velocity = new Vector2
+        {
+            x = body.velocity.x / (force * stats[StatType.Durability].Value),
+            y = body.velocity.y
+        };
+    }
+    #endregion
     #region Collisions Implementation
     private Vector2 priorFrameVelocity;
     private void OnCollisionEnter2D(Collision2D collision)
