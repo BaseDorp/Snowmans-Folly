@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [Serializable]
 public sealed class Stat
@@ -61,6 +61,7 @@ public sealed class StatProfile : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(StatProfile))]
 public sealed class StatProfileEditor : Editor
 {
@@ -92,3 +93,4 @@ public sealed class StatProfileEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif

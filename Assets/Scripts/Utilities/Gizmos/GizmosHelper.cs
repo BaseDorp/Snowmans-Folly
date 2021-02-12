@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 public static class GizmosHelper
 {
     private const float ASYMPTOTE_DASH_LENGTH = 0.2f;
@@ -46,3 +47,4 @@ public static class GizmosHelper
         }
     }
 }
+#endif
