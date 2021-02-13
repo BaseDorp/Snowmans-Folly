@@ -37,7 +37,6 @@ public class PanelManager : MonoBehaviour
         HidePanel(creditsPanel);
         ShowPanel(gameplayPanel);
         snowman.Mode = SnowmanControl.ControlMode.Launching;
-        terrain.ResetGeneration();
     }
 
     public void ShowPanel(GameObject Panel)

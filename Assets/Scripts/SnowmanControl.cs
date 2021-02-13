@@ -24,6 +24,10 @@ public sealed class SnowmanControl : MonoBehaviour
     /// </summary>
     public static event Action Launched;
 
+    // TODO this is a hack.
+    [SerializeField] private TerrainGenerator generator = null;
+    [SerializeField] private Transform followCam = null;
+
     #region Local Enums
     /// <summary>
     /// Holds the current interaction mode for the snowman actor.
@@ -352,8 +356,13 @@ public sealed class SnowmanControl : MonoBehaviour
     #region Input Listeners
     private void OnLaunchPressed()
     {
-        Mode = ControlMode.Sledding;
-        body.velocity = launchPoint.right * stats[StatType.LaunchSpeed].Value;
+        // TODO this check is a hack.
+        if (((Vector2)followCam.position - (Vector2)transform.position).sqrMagnitude < 500f)
+        {
+            generator.ResetGeneration();
+            Mode = ControlMode.Sledding;
+            body.velocity = launchPoint.right * stats[StatType.LaunchSpeed].Value;
+        }
     }
     private void OnWingFlapPressed()
     {
