@@ -134,10 +134,13 @@ public class InteractableSpawner : MonoBehaviour
         float xSpawn = playerLocation.x + xSpawnDistance;
         float ySpawn = playerLocation.y - ySpawnDistance;
         spawnLocation = new Vector2(xSpawn, ySpawn);
-        while(spawnLocation.y<playerLocation.y+ySpawnDistance)
+        for(float currentXSpawn=playerLocation.x + 10; currentXSpawn<xSpawnDistance;currentXSpawn+=5)
         {
-            RandomizeSpawn();
-            spawnLocation.y += ySpawnStagger;
+            while (spawnLocation.y < playerLocation.y + ySpawnDistance)
+            {
+                RandomizeSpawn();
+                spawnLocation.y += ySpawnStagger;
+            }
         }
     }
 
@@ -190,7 +193,7 @@ public class InteractableSpawner : MonoBehaviour
         hazardSpawnRate = baseHazardSpawnRate-(int)stats[StatType.Luck].Value;
         powerupSpawnRate = basePowerupSpawnRate + (int)stats[StatType.Luck].Value;
         coinSpawnRate = baseCoinSpawnRate;
-
+        SpawnInteractables();
     }
 
     public void ClearInteractables()
