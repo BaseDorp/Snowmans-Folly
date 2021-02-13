@@ -54,7 +54,6 @@ public class PanelManager : MonoBehaviour
     {
         ShowPanel(upgradePanel);
         HidePanel(menuPanel);
-        HidePanel(gameplayPanel);
         HidePanel(creditsPanel);
     }
 
