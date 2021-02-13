@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaminaBoost : Interactable
+public class StaminaBoost : Powerup
 {
     [Header("Stamina Parameter")]
     [Tooltip("How much Stamina is added when the player hits this interactable.")]
@@ -26,6 +26,7 @@ public class StaminaBoost : Interactable
 
     public override void OnPlayerEnter(SnowmanControl player)
     {
+        PlayPowerupSound(player);
         storedPlayerStamina = player.GetComponent<StaminaSystem>();
         switch (staminaType)
         {

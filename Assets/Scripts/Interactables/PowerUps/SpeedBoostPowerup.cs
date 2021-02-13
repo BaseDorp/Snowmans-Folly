@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedBoostPowerup : Interactable
+public class SpeedBoostPowerup : Powerup
 {
     [Header("Speed Parameter")]
     [Tooltip("How much the velocity is added by when hitting this powerup.")]
@@ -17,6 +17,7 @@ public class SpeedBoostPowerup : Interactable
             velocityGain += playerStats[StatType.Acceleration].Value;
         }
         player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x + velocityGain, player.GetComponent<Rigidbody2D>().velocity.y);
+        PlayPowerupSound(player);
         Destroy(gameObject);
     }
 }

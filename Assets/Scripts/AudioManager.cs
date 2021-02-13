@@ -36,6 +36,11 @@ public class AudioManager : MonoBehaviour
         PlayBGM(menuBGMClip);
     }
 
+    private void OnEnable()
+    {
+        SnowmanControl.Launched += PlayRandomBGM;
+    }
+
     public void PlaySFX(AudioClip SFX)
     {
         sfxSource.PlayOneShot(SFX);
