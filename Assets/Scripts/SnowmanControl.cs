@@ -346,7 +346,7 @@ public sealed class SnowmanControl : MonoBehaviour
         sledRenderer.enabled = false;
         sledRenderer.transform.parent = sledParent;
         sledRenderer.transform.localPosition = localPosition;
-        sledRenderer.transform.rotation = localRotation;
+        sledRenderer.transform.localRotation = localRotation;
     }
     #endregion
     #region Input Listeners
