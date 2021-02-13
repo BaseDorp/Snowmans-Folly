@@ -13,6 +13,7 @@ public sealed class TerrainGenerator : MonoBehaviour
 
     [SerializeField] private int poolSize = 1;
     [SerializeField] private float waterStep = 1f;
+    [SerializeField] private float maxHeight = 7f;
 
     private Vector2 currentLocation;
 
@@ -115,7 +116,9 @@ public sealed class TerrainGenerator : MonoBehaviour
 
         foreach (int index in typedIndices[TerrainSegmentType.Continuous])
         {
-            if (currentLocation.y + terrainPools[index][0].DeltaPosition.y > transform.position.y)
+            float endHeight = currentLocation.y + terrainPools[index][0].DeltaPosition.y;
+            if (endHeight > transform.position.y
+                && endHeight < transform.position.y + maxHeight)
             {
                 segmentWeights.Add(index, 1f);
                 totalWeight += 1f;
