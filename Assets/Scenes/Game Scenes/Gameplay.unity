@@ -11405,27 +11405,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-  - level: 0
+  - level: 1
     maxLevel: 0
     minValue: 0
     maxValue: 0
-  - level: 0
-    maxLevel: 0
-    minValue: 0
-    maxValue: 0
-  - level: 5
+  - level: 1
     maxLevel: 5
-    minValue: 100
+    minValue: 0
+    maxValue: 2
+  - level: 1
+    maxLevel: 5
+    minValue: 90
     maxValue: 300
-  - level: 0
+  - level: 1
     maxLevel: 5
     minValue: 0
     maxValue: 20
-  - level: 0
-    maxLevel: 0
-    minValue: 0
-    maxValue: 0
-  - level: 0
+  - level: 1
+    maxLevel: 5
+    minValue: 1
+    maxValue: 5
+  - level: 1
     maxLevel: 5
     minValue: 0
     maxValue: 1.5
@@ -11433,13 +11433,13 @@ MonoBehaviour:
     maxLevel: 5
     minValue: 0
     maxValue: 40
-  - level: 5
+  - level: 1
     maxLevel: 5
     minValue: 0
     maxValue: 0
-  - level: 5
+  - level: 1
     maxLevel: 5
-    minValue: 0
+    minValue: 0.5
     maxValue: 1
 --- !u!114 &1866331192
 MonoBehaviour:

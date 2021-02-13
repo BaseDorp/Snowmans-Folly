@@ -73,6 +73,16 @@ public class PanelManager : MonoBehaviour
         HidePanel(gameplayPanel);
     }
 
+    public void StartGame()
+    {
+        //TODO: Remove this
+        //Quick Fix
+        Currency.Coins = 0;
+        ShowPanel(upgradePanel);
+        HidePanel(menuPanel);
+        HidePanel(creditsPanel);
+    }
+
     public void ExitGame()
     {
         Application.Quit();
