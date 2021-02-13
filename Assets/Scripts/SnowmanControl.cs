@@ -24,6 +24,9 @@ public sealed class SnowmanControl : MonoBehaviour
     /// </summary>
     public static event Action Launched;
 
+    // TODO this is a hack.
+    [SerializeField] private TerrainGenerator generator = null;
+    [SerializeField] private Transform followCam = null;
 
     #region Local Enums
     /// <summary>
@@ -131,7 +134,8 @@ public sealed class SnowmanControl : MonoBehaviour
     private void Start()
     {
         PlayerService.AddPlayer(this);
-        Mode = controlMode;
+        body.isKinematic = true;
+        body.velocity = Vector2.zero;
         flapStateHash = Animator.StringToHash(wingFlapStateName);
         currentBounceEffectiveness = 1f;
         shield = null;
@@ -199,7 +203,7 @@ public sealed class SnowmanControl : MonoBehaviour
                     body.velocity = Vector2.zero;
                     // TODO this should not be here.
                     currentBounceEffectiveness = 1f;
-                    ControlDisabled?.Invoke();
+                    StartCoroutine(EndRunJumpUp());
                     break;
                 default:
                     throw new NotImplementedException();
@@ -420,11 +424,59 @@ public sealed class SnowmanControl : MonoBehaviour
         sledRenderer.transform.localRotation = localRotation;
     }
     #endregion
+
+    #region Snowman Jump Up Routine
+    private IEnumerator EndRunJumpUp()
+    {
+        float startY = transform.position.y;
+        float startRotation = cosmeticsRoot.eulerAngles.z.Wrapped(0f, 360f);
+        float startHeadRotation = headPivot.localEulerAngles.z.Wrapped(0f, 360f);
+        // TODO it is sad how hard scripted this is!!!
+        float interpolant = 0f;
+        while (true)
+        {
+            interpolant += Time.deltaTime * 0.9f;
+            if (interpolant >= 1f)
+            {
+                headPivot.localEulerAngles = Vector3.zero;
+                cosmeticsRoot.eulerAngles = Vector3.zero;
+                transform.position = new Vector3
+                {
+                    x = transform.position.x,
+                    y = startY,
+                    z = transform.position.z
+                };
+                break;
+            }
+            else
+            {
+                headPivot.localEulerAngles =
+                    Vector3.forward * Mathf.Lerp(startHeadRotation, 0f, interpolant);
+                cosmeticsRoot.eulerAngles =
+                    Vector3.forward * Mathf.Lerp(startRotation, 0f, interpolant);
+                transform.position = new Vector3
+                {
+                    x = transform.position.x,
+                    y = startY + 2f * (4f * interpolant) * (1f - interpolant),
+                    z = transform.position.z
+                };
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        ControlDisabled?.Invoke();
+    }
+    #endregion
     #region Input Listeners
     private void OnLaunchPressed()
     {
-        Mode = ControlMode.Sledding;
-        body.velocity = launchPoint.right * stats[StatType.LaunchSpeed].Value;
+        // TODO this check is a hack.
+        if (((Vector2)followCam.position - (Vector2)transform.position).sqrMagnitude < 500f)
+        {
+            generator.ResetGeneration();
+            Mode = ControlMode.Sledding;
+            body.velocity = launchPoint.right * stats[StatType.LaunchSpeed].Value;
+        }
     }
     private void OnWingFlapPressed()
     {

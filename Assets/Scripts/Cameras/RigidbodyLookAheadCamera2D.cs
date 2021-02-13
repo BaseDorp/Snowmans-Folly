@@ -15,8 +15,9 @@ public sealed class RigidbodyLookAheadCamera2D : ConstrainableCamera2D
         public Vector2 trailingAmplitude;
     }
 
-
-    protected override void Update()
+    // This has to run in fixed update because the
+    // rigidbody runs in fixed update. Otherwise stutter.
+    private void FixedUpdate()
     {
         float interpolant =
             Mathf.Clamp01(Mathf.InverseLerp(
@@ -30,7 +31,7 @@ public sealed class RigidbodyLookAheadCamera2D : ConstrainableCamera2D
                 cameraZoomIntensity.cameraSizeRange.max,
                 interpolant);
 
-        transform.position = new Vector3
+        Vector3 target = new Vector3
         {
             x = targetBody.transform.position.x
                 + cameraZoomIntensity.trailingAmplitude.x * targetBody.velocity.x,
@@ -39,6 +40,8 @@ public sealed class RigidbodyLookAheadCamera2D : ConstrainableCamera2D
             z = transform.position.z
         };
 
-        base.Update();
+        transform.position = Vector3.MoveTowards(transform.position, target, Time.fixedDeltaTime * (target - transform.position).magnitude);
+
+        Update();
     }
 }
