@@ -181,7 +181,6 @@ public sealed class SnowmanControl : MonoBehaviour
                     SetPhysics();
                     shield = null;
                     kite = null;
-                    Launched?.Invoke();
                     break;
                 case ControlMode.Sledding:
                     cosmeticsRoot.up = Vector3.up;
@@ -370,7 +369,7 @@ public sealed class SnowmanControl : MonoBehaviour
             if (IsOnSurface)
                 Mode = ControlMode.Sliding;
             else if (body.position.y < outOfBoundsMarker.position.y
-                || body.velocity.x <= 0f)
+                || body.velocity.x <= 0.01f)
                 Mode = ControlMode.Disabled;
             // Add a smoothing function to prevent abrupt cosmetic changes.
             cosmeticsRoot.up = Vector3.Slerp(
@@ -387,7 +386,7 @@ public sealed class SnowmanControl : MonoBehaviour
                 Mode = ControlMode.Flying;
             }
             else if (body.position.y < outOfBoundsMarker.position.y
-                || body.velocity.x < 0f)
+                || body.velocity.x < 0.01f)
             {
                 gameObject.GetComponent<AudioManager>().StopPlayingSlide();
                 Mode = ControlMode.Disabled;
@@ -473,6 +472,7 @@ public sealed class SnowmanControl : MonoBehaviour
         // TODO this check is a hack.
         if (((Vector2)followCam.position - (Vector2)transform.position).sqrMagnitude < 500f)
         {
+            Launched?.Invoke();
             generator.ResetGeneration();
             Mode = ControlMode.Sledding;
             body.velocity = launchPoint.right * stats[StatType.LaunchSpeed].Value;

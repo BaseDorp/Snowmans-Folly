@@ -112,7 +112,8 @@ public class InteractableSpawner : MonoBehaviour
     public void ResetInteractables()
     {
         ClearInteractables();
-        lastPlayerSpawnLocation = transform.position;
+        spawnLocation = Vector2.zero;
+        lastPlayerSpawnLocation = Vector2.zero;
 
         //As the player improves luck, hazard spawn goes down and powerup spawn goes up
         pool = spawnablesPool.Retrieve();
