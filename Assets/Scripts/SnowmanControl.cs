@@ -280,6 +280,8 @@ public sealed class SnowmanControl : MonoBehaviour
     #region Update Implementation
     private void Update()
     {
+        body.velocity = Vector2.ClampMagnitude(body.velocity, StatProfile[StatType.MaxSpeed].Value);
+        Debug.Log(body.velocity);
         // Update common stuff.
         if (body.velocity.magnitude > 0.2f)
         {

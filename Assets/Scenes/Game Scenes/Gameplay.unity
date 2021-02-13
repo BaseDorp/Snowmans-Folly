@@ -11544,9 +11544,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
   - level: 0
-    maxLevel: 0
-    minValue: 0
-    maxValue: 0
+    maxLevel: 5
+    minValue: 20
+    maxValue: 60
   - level: 0
     maxLevel: 5
     minValue: 0
