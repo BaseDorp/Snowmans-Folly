@@ -11465,7 +11465,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1866331186}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
+  m_Material: {fileID: 6200000, guid: b238d2eb47f7d344995f873d4d216d4a, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -11488,7 +11488,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
+  m_Material: {fileID: 6200000, guid: b238d2eb47f7d344995f873d4d216d4a, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -11529,6 +11529,7 @@ MonoBehaviour:
   minBounceFactor: 0.1
   onLaunchBroadcaster: {fileID: 988251884}
   onWingFlapBroadcaster: {fileID: 1191914906}
+  groundPhysics: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
 --- !u!114 &1866331191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11572,8 +11573,8 @@ MonoBehaviour:
     maxValue: 24
   - level: 0
     maxLevel: 5
-    minValue: 0
-    maxValue: 0
+    minValue: 0.006
+    maxValue: 0.0001
   - level: 1
     maxLevel: 5
     minValue: 0.5

@@ -24,6 +24,7 @@ public sealed class SnowmanControl : MonoBehaviour
     /// </summary>
     public static event Action Launched;
 
+
     #region Local Enums
     /// <summary>
     /// Holds the current interaction mode for the snowman actor.
@@ -95,6 +96,7 @@ public sealed class SnowmanControl : MonoBehaviour
     [SerializeField] private ButtonDownBroadcaster onLaunchBroadcaster = null;
     [Tooltip("The button broadcaster for when the player should flap to gain altitude.")]
     [SerializeField] private ButtonDownBroadcaster onWingFlapBroadcaster = null;
+    [SerializeField] private PhysicsMaterial2D groundPhysics;
     private void OnValidate()
     {
         if (hitCircles != null)
@@ -165,6 +167,7 @@ public sealed class SnowmanControl : MonoBehaviour
                     staminaSystem.MaxStamina = stats[StatType.Propulsion].Value;
                     staminaSystem.Stamina = staminaSystem.MaxStamina;
                     sledRenderer.enabled = true;
+                    SetPhysics();
                     Launched?.Invoke();
                     break;
                 case ControlMode.Sledding:
@@ -216,6 +219,11 @@ public sealed class SnowmanControl : MonoBehaviour
             x = body.velocity.x / (1 + (force/2 * (2-stats[StatType.Durability].Value))),
             y = body.velocity.y
         };
+    }
+
+    public void SetPhysics()
+    {
+        groundPhysics.friction=StatProfile[StatType.Friction].Value;
     }
     #endregion
     #region Collisions Implementation
