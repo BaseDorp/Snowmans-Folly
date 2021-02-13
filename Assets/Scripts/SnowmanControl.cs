@@ -370,7 +370,7 @@ public sealed class SnowmanControl : MonoBehaviour
             if (IsOnSurface)
                 Mode = ControlMode.Sliding;
             else if (body.position.y < outOfBoundsMarker.position.y
-                || body.velocity.x < 0f)
+                || body.velocity.x <= 0f)
                 Mode = ControlMode.Disabled;
             // Add a smoothing function to prevent abrupt cosmetic changes.
             cosmeticsRoot.up = Vector3.Slerp(
