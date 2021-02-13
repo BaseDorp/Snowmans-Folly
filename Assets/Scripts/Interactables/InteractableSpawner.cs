@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,31 +38,20 @@ public class InteractableSpawner : MonoBehaviour
     [SerializeField]
     private Transform interactableParent;
 
-    [SerializeField]
-    private List<GameObject> hazards;
+    [Header("Spawn Rate Parameters")]
 
     [SerializeField]
-    private List<GameObject> powerups;
+    private GameObjectPool spawnablesPool = null;
+    private WeightedPool<GameObject> pool;
 
     [SerializeField]
-    private List<GameObject> coins;
-
-    [Header("Spawn rates, must total 100")]
-    [Tooltip("Percentage, max of 100")]
-    [SerializeField]
-    private int baseHazardSpawnRate;
-
-    [Tooltip("Percentage, max of 100")]
-    [SerializeField]
-    private int basePowerupSpawnRate;
-
-    [Tooltip("Percentage, max of 100")]
-    [SerializeField]
-    private int baseCoinSpawnRate;
-
-    private int hazardSpawnRate;
-    private int powerupSpawnRate;
-    private int coinSpawnRate;
+    private LuckWeightFactor[] luckEffects = null;
+    [Serializable]
+    private sealed class LuckWeightFactor
+    {
+        public GameObject weightToAugment;
+        public float addedWeightPerLuck;
+    }
 
     private Vector2 playerLocation;
     private Vector2 lastPlayerSpawnLocation;
@@ -72,44 +62,6 @@ public class InteractableSpawner : MonoBehaviour
     {
         playerLocation = this.gameObject.transform.position;
         lastPlayerSpawnLocation = playerLocation;
-        hazardSpawnRate = baseHazardSpawnRate;
-        powerupSpawnRate = basePowerupSpawnRate;
-        coinSpawnRate = baseCoinSpawnRate;
-        BalancePercentage();
-    }
-
-    private void BalancePercentage()
-    {
-        while (hazardSpawnRate + powerupSpawnRate + coinSpawnRate > 100)
-        {
-            if (hazardSpawnRate > 0)
-            {
-                hazardSpawnRate -= 1;
-            }
-            else if (powerupSpawnRate > 0)
-            {
-                powerupSpawnRate -= 1;
-            }
-            else
-            {
-                coinSpawnRate -= 1;
-            }
-        }
-        while (hazardSpawnRate + powerupSpawnRate + coinSpawnRate < 100)
-        {
-            if (hazardSpawnRate < 100)
-            {
-                hazardSpawnRate += 1;
-            }
-            else if (powerupSpawnRate < 100)
-            {
-                powerupSpawnRate += 1;
-            }
-            else
-            {
-                coinSpawnRate += 1;
-            }
-        }
     }
 
     private void OnEnable()
@@ -137,50 +89,23 @@ public class InteractableSpawner : MonoBehaviour
             spawnLocation = new Vector2(xSpawn, ySpawn);
             while (spawnLocation.y < playerLocation.y + ySpawnDistance)
             {
-                RandomizeSpawn();
+                Spawn();
                 spawnLocation.y += ySpawnStagger;
             }
             lastPlayerSpawnLocation = new Vector2(xSpawn,playerLocation.y);
         }
     }
 
-    public void RandomizeSpawn()
+    public void Spawn()
     {
-        int randomInt = Random.Range(0, spawnChance);
-        //There's a 1/spawnChance chance that the interactable will spawn. 
-        if(randomInt==0)
+        float xSpawn = spawnLocation.x + (UnityEngine.Random.Range(-2, 2));
+        float ySpawn = spawnLocation.y + (UnityEngine.Random.Range(-1, 1));
+        Vector2 randomSpawnLocation = new Vector2(xSpawn, ySpawn);
+        if(randomSpawnLocation.y>spawnPlane.transform.position.y)
         {
-            int chooseInteractable = Random.Range(0, 100);
-            if(chooseInteractable>=0&&chooseInteractable<hazardSpawnRate)
-            {
-                Spawn(hazards);
-            }
-            else if(chooseInteractable>=hazardSpawnRate&&chooseInteractable<hazardSpawnRate+powerupSpawnRate)
-            {
-                Spawn(powerups);
-            }
-            else
-            {
-                Spawn(coins);
-            }
-        }
-    }
-
-    public void Spawn(List<GameObject> interactablesList)
-    {
-        if(interactablesList!=null)
-        {
-            if(interactablesList.Count!=0)
-            {
-                int randomInteractable = Random.Range(0, interactablesList.Count);
-                float xSpawn = spawnLocation.x + (Random.Range(-2, 2));
-                float ySpawn = spawnLocation.y + (Random.Range(-1, 1));
-                Vector2 randomSpawnLocation = new Vector2(xSpawn, ySpawn);
-                if(randomSpawnLocation.y>spawnPlane.transform.position.y)
-                {
-                    Instantiate(interactablesList[randomInteractable], randomSpawnLocation, Quaternion.identity,interactableParent);
-                }
-            }
+            GameObject poolNext = pool.Next();
+            if (poolNext != null)
+                Instantiate(poolNext, randomSpawnLocation, Quaternion.identity, interactableParent);
         }
     }
 
@@ -190,9 +115,12 @@ public class InteractableSpawner : MonoBehaviour
         lastPlayerSpawnLocation = transform.position;
 
         //As the player improves luck, hazard spawn goes down and powerup spawn goes up
-        hazardSpawnRate = baseHazardSpawnRate-(int)stats[StatType.Luck].Value;
-        powerupSpawnRate = basePowerupSpawnRate + (int)stats[StatType.Luck].Value;
-        coinSpawnRate = baseCoinSpawnRate;
+        pool = spawnablesPool.Retrieve();
+        foreach (LuckWeightFactor effect in luckEffects)
+        {
+            pool[effect.weightToAugment] += stats[StatType.Luck].Value * effect.addedWeightPerLuck;
+        }
+
         SpawnInteractables();
     }
 

@@ -11432,6 +11432,7 @@ GameObject:
   - component: {fileID: 1866331191}
   - component: {fileID: 1866331192}
   - component: {fileID: 1866331193}
+  - component: {fileID: 1866331195}
   - component: {fileID: 1866331194}
   m_Layer: 0
   m_Name: Player Snowman
@@ -11618,19 +11619,23 @@ MonoBehaviour:
   spawnChance: 4
   spawnPlane: {fileID: 1198340608}
   interactableParent: {fileID: 82159864}
-  hazards:
-  - {fileID: 6835523772752308569, guid: 3e2c143ca1fddae429e9dee55b03afd8, type: 3}
-  - {fileID: 9151975726192610784, guid: f56c4dd419edc7943b16ade62f39cc39, type: 3}
-  powerups:
-  - {fileID: 1946714472022948365, guid: 8034728b1a580cb488460b0db92f847b, type: 3}
-  - {fileID: 6293471922574191601, guid: 95191f60d04830f43a198192c48c36b0, type: 3}
-  - {fileID: 7866157534364863849, guid: f25278b320db1b64e9ede277bf61407b, type: 3}
-  - {fileID: 6681560710230032933, guid: 4f5472b2ff14dce408281f7bf517d11e, type: 3}
-  coins:
-  - {fileID: 2035371766157916566, guid: f1b5ad741dfaa0b4b886dd214e5836b2, type: 3}
-  baseHazardSpawnRate: 40
-  basePowerupSpawnRate: 20
-  baseCoinSpawnRate: 40
+  spawnablesPool: {fileID: 1866331195}
+  luckEffects:
+  - weightToAugment: {fileID: 2035371766157916566, guid: f1b5ad741dfaa0b4b886dd214e5836b2,
+      type: 3}
+    addedWeightPerLuck: 10
+  - weightToAugment: {fileID: 6681560710230032933, guid: 4f5472b2ff14dce408281f7bf517d11e,
+      type: 3}
+    addedWeightPerLuck: 5
+  - weightToAugment: {fileID: 7866157534364863849, guid: f25278b320db1b64e9ede277bf61407b,
+      type: 3}
+    addedWeightPerLuck: 5
+  - weightToAugment: {fileID: 1946714472022948365, guid: 8034728b1a580cb488460b0db92f847b,
+      type: 3}
+    addedWeightPerLuck: 5
+  - weightToAugment: {fileID: 6293471922574191601, guid: 95191f60d04830f43a198192c48c36b0,
+      type: 3}
+    addedWeightPerLuck: 5
 --- !u!114 &1866331194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11669,6 +11674,42 @@ MonoBehaviour:
     type: 2}
   slidingMixer: {fileID: 3561962829899223386, guid: 2133898c7b9cd8e48bfa01820fc00f8b,
     type: 2}
+--- !u!114 &1866331195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866331186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eefde2eed73f6e04caa7ac10f47dc4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entries:
+  - gameObject: {fileID: 6835523772752308569, guid: 3e2c143ca1fddae429e9dee55b03afd8,
+      type: 3}
+    weight: 20
+  - gameObject: {fileID: 9151975726192610784, guid: f56c4dd419edc7943b16ade62f39cc39,
+      type: 3}
+    weight: 20
+  - gameObject: {fileID: 6681560710230032933, guid: 4f5472b2ff14dce408281f7bf517d11e,
+      type: 3}
+    weight: 5
+  - gameObject: {fileID: 7866157534364863849, guid: f25278b320db1b64e9ede277bf61407b,
+      type: 3}
+    weight: 5
+  - gameObject: {fileID: 1946714472022948365, guid: 8034728b1a580cb488460b0db92f847b,
+      type: 3}
+    weight: 30
+  - gameObject: {fileID: 6293471922574191601, guid: 95191f60d04830f43a198192c48c36b0,
+      type: 3}
+    weight: 5
+  - gameObject: {fileID: 2035371766157916566, guid: f1b5ad741dfaa0b4b886dd214e5836b2,
+      type: 3}
+    weight: 40
+  - gameObject: {fileID: 0}
+    weight: 120
 --- !u!1 &1877280658
 GameObject:
   m_ObjectHideFlags: 0
