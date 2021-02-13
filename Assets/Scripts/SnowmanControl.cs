@@ -49,6 +49,9 @@ public sealed class SnowmanControl : MonoBehaviour
     private Vector2 sledPosition;
     //Shield powerup that attaches to the player
     private GameObject shield;
+    //Kite powerup that attaches to the player
+    private GameObject kite;
+    private Vector2 kiteVelocity;
     #endregion
     #region Inspector Fields
     [Tooltip("The stats for this snowman controller.")]
@@ -132,6 +135,7 @@ public sealed class SnowmanControl : MonoBehaviour
         flapStateHash = Animator.StringToHash(wingFlapStateName);
         currentBounceEffectiveness = 1f;
         shield = null;
+        kite = null;
     }
     #endregion
     #region Properties
@@ -172,6 +176,7 @@ public sealed class SnowmanControl : MonoBehaviour
                     sledRenderer.enabled = true;
                     SetPhysics();
                     shield = null;
+                    kite = null;
                     Launched?.Invoke();
                     break;
                 case ControlMode.Sledding:
@@ -246,6 +251,27 @@ public sealed class SnowmanControl : MonoBehaviour
         shield.transform.parent = gameObject.transform;
     }
 
+    public void SetKite(GameObject newKite,float duration, float yVelocity)
+    {
+        if(kite!=null)
+        {
+            Destroy(kite);
+        }
+        kite = newKite;
+        kite.transform.parent = gameObject.transform;
+        kiteVelocity = new Vector2(body.velocity.x,yVelocity);
+        StartCoroutine(KiteTimer(duration));
+    }
+
+    public IEnumerator KiteTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        if(kite!=null)
+        {
+            Destroy(kite);
+        }
+    }
+
     #endregion
     #region Collisions Implementation
     private Vector2 priorFrameVelocity;
@@ -301,7 +327,15 @@ public sealed class SnowmanControl : MonoBehaviour
     #region Update Implementation
     private void Update()
     {
-        body.velocity = Vector2.ClampMagnitude(body.velocity, StatProfile[StatType.MaxSpeed].Value);
+        //If the player is using the kite powerup, momentarily disable velocity clamping
+        if(kite==null)
+        {
+            body.velocity = Vector2.ClampMagnitude(body.velocity, StatProfile[StatType.MaxSpeed].Value);
+        }
+        else
+        {
+            body.velocity = kiteVelocity;
+        }
         // Update common stuff.
         if (body.velocity.magnitude > 0.2f)
         {

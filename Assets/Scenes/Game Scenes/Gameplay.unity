@@ -11621,7 +11621,8 @@ MonoBehaviour:
   powerups:
   - {fileID: 1946714472022948365, guid: 8034728b1a580cb488460b0db92f847b, type: 3}
   - {fileID: 6293471922574191601, guid: 95191f60d04830f43a198192c48c36b0, type: 3}
-  - {fileID: 749060520054061487, guid: 277baf2ac1ad39e4188319aab37cdd7b, type: 3}
+  - {fileID: 7866157534364863849, guid: f25278b320db1b64e9ede277bf61407b, type: 3}
+  - {fileID: 6681560710230032933, guid: 4f5472b2ff14dce408281f7bf517d11e, type: 3}
   coins:
   - {fileID: 2035371766157916566, guid: f1b5ad741dfaa0b4b886dd214e5836b2, type: 3}
   baseHazardSpawnRate: 40
@@ -11644,7 +11645,7 @@ MonoBehaviour:
   slidingSource: {fileID: 1286868971}
   collisionClips:
   - {fileID: 8300000, guid: 757479f0bdb3a3249a41688fd423a06d, type: 3}
-  - {fileID: 8300000, guid: 853e60173aa0ce6428cf1ad771137218, type: 3}
+  - {fileID: 8300000, guid: 12b16ed359ce0dc4490cf9fb682e7c72, type: 3}
   - {fileID: 8300000, guid: 72f2d18d2957d1140b9ae4b7a96d937c, type: 3}
   powerupClips:
   - {fileID: 8300000, guid: 3aa593a5118a448458f2e4c1927e9e42, type: 3}
