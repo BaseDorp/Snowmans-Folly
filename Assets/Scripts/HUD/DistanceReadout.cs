@@ -32,7 +32,14 @@ public sealed class DistanceReadout : MonoBehaviour
     {
         // TODO this should not be invoked here.
         // This should be bound to an event that fires when the run starts.
+        Currency.Coins = 0;
         OnRunStart();
+    }
+
+    private void OnEnable()
+    {
+        SnowmanControl.ControlDisabled += OnRunEnd;
+        SnowmanControl.Launched += OnRunStart;
     }
     #endregion
     #region Destructor Clean Up
@@ -58,18 +65,24 @@ public sealed class DistanceReadout : MonoBehaviour
                 bestDistance = currentDistance;
                 recordText.text = $"{RECORD_PREFIX}{currentDistance}{DISTANCE_SUFFIX}";
             }
+            lastCheckDistance = currentDistance;
         }
     }
     #endregion
+    
     #region Run State Listeners
     // Detach from Update when a run is not in progress.
     private void OnRunStart()
     {
         UpdateContext.Update += UpdateDistance;
-        lastCheckDistance = 0;
     }
     private void OnRunEnd()
     {
+        //TODO: Make this not a hard call
+        StatProfile snowmanStats = distanceTransform.gameObject.GetComponent<StatProfile>();
+        //Minimum of 1 coin per run
+        Currency.Coins += 1+((int)snowmanStats[StatType.Profit].Value) * (int)(lastCheckDistance / 100);
+        lastCheckDistance = 0;
         UpdateContext.Update -= UpdateDistance;
     }
     #endregion

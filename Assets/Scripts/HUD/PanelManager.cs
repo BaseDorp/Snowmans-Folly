@@ -53,7 +53,6 @@ public class PanelManager : MonoBehaviour
     {
         ShowPanel(upgradePanel);
         HidePanel(menuPanel);
-        HidePanel(gameplayPanel);
         HidePanel(creditsPanel);
     }
 
@@ -71,6 +70,16 @@ public class PanelManager : MonoBehaviour
         HidePanel(creditsPanel);
         HidePanel(upgradePanel);
         HidePanel(gameplayPanel);
+    }
+
+    public void StartGame()
+    {
+        //TODO: Remove this
+        //Quick Fix
+        Currency.Coins = 0;
+        ShowPanel(upgradePanel);
+        HidePanel(menuPanel);
+        HidePanel(creditsPanel);
     }
 
     public void ExitGame()
