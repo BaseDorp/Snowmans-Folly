@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioSource bgmSource;
     [SerializeField]
+    private AudioSource slidingSource;
+    [SerializeField]
     private AudioClip[] collisionClips;
     [SerializeField]
     private AudioClip[] powerupClips;
@@ -25,6 +27,8 @@ public class AudioManager : MonoBehaviour
     private AudioMixerGroup sfxMixer;
     [SerializeField]
     private AudioMixerGroup bgmMixer;
+    [SerializeField]
+    private AudioMixerGroup slidingMixer;
 
     private bool sfxMuted = false;
     private bool bgmMuted = false;
@@ -33,7 +37,14 @@ public class AudioManager : MonoBehaviour
     {
         sfxSource.outputAudioMixerGroup = sfxMixer;
         bgmSource.outputAudioMixerGroup = bgmMixer;
+        slidingSource.outputAudioMixerGroup = slidingMixer;
+
         PlayBGM(menuBGMClip);
+    }
+
+    private void OnEnable()
+    {
+        SnowmanControl.Launched += PlayRandomBGM;
     }
 
     public void PlaySFX(AudioClip SFX)
@@ -66,8 +77,17 @@ public class AudioManager : MonoBehaviour
     
     public void PlaySlide()
     {
-        int x = Random.Range(0, slidingClips.Length);
-        PlaySFX(slidingClips[x]);
+        if(slidingSource.isPlaying==false)
+        {
+            int x = Random.Range(0, slidingClips.Length);
+            slidingSource.clip = slidingClips[x];
+            slidingSource.Play();
+        }
+    }
+
+    public void StopPlayingSlide()
+    {
+        slidingSource.Stop();
     }
 
     public void PlayRandomBGM()

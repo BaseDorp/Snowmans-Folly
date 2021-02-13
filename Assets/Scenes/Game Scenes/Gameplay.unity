@@ -3326,7 +3326,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 561144423}
+      - m_Target: {fileID: 1866331194}
         m_MethodName: ToggleSFXMute
         m_Mode: 1
         m_Arguments:
@@ -3875,71 +3875,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530402775}
   m_CullTransparentMesh: 0
---- !u!1 &561144422
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 561144424}
-  - component: {fileID: 561144423}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &561144423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561144422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 015ece623650cd349af318023d01083f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sfxSource: {fileID: 1877280659}
-  bgmSource: {fileID: 1138429939}
-  collisionClips:
-  - {fileID: 8300000, guid: 757479f0bdb3a3249a41688fd423a06d, type: 3}
-  - {fileID: 8300000, guid: 7886bd85c6097e745860e56ac034bdf7, type: 3}
-  - {fileID: 8300000, guid: 72f2d18d2957d1140b9ae4b7a96d937c, type: 3}
-  powerupClips:
-  - {fileID: 8300000, guid: 3aa593a5118a448458f2e4c1927e9e42, type: 3}
-  - {fileID: 8300000, guid: e1008bdaec9f17b4cbb14230d08db60f, type: 3}
-  slidingClips:
-  - {fileID: 8300000, guid: 4b6d14f7a6ca19045b3ec03ac2e3271d, type: 3}
-  - {fileID: 8300000, guid: fe5eacc372079f64592b7069188051c4, type: 3}
-  - {fileID: 8300000, guid: b2b7633a832001f4482285ead8818e31, type: 3}
-  menuBGMClip: {fileID: 8300000, guid: e13f38e4a7effe94ebb3c8b416142087, type: 3}
-  bgmClips:
-  - {fileID: 8300000, guid: 51b4df04959abcb40a98e46ada7c9cce, type: 3}
-  - {fileID: 8300000, guid: f29c866c06f982e4dabeb4d10d092175, type: 3}
-  cookieClip: {fileID: 8300000, guid: cda8a5d91c0dfba419e0b700eb790126, type: 3}
-  sfxMixer: {fileID: 3518901879358827397, guid: 2133898c7b9cd8e48bfa01820fc00f8b,
-    type: 2}
-  bgmMixer: {fileID: -969904925815851113, guid: 2133898c7b9cd8e48bfa01820fc00f8b,
-    type: 2}
---- !u!4 &561144424
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561144422}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.793534, y: 3.6960213, z: 116.44141}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590156181
 GameObject:
   m_ObjectHideFlags: 0
@@ -7557,7 +7492,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 561144423}
+      - m_Target: {fileID: 1866331194}
         m_MethodName: ToggleBGMMute
         m_Mode: 1
         m_Arguments:
@@ -7896,7 +7831,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1144280848
 GameObject:
@@ -8767,6 +8702,133 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1281513024}
   m_CullTransparentMesh: 0
+--- !u!1 &1286868970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1286868972}
+  - component: {fileID: 1286868971}
+  m_Layer: 0
+  m_Name: slidingSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1286868971
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286868970}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.325
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1286868972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286868970}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.793534, y: 3.6960213, z: 116.44141}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1343690690
 GameObject:
   m_ObjectHideFlags: 0
@@ -9659,7 +9721,6 @@ MonoBehaviour:
   rightHandTerrainCollider: {fileID: 41256820}
   poolSize: 4
   waterStep: 1
-  maxHeight: 7
   behaviour: 0
 --- !u!1 &1563396125
 GameObject:
@@ -11370,6 +11431,7 @@ GameObject:
   - component: {fileID: 1866331191}
   - component: {fileID: 1866331192}
   - component: {fileID: 1866331193}
+  - component: {fileID: 1866331194}
   m_Layer: 0
   m_Name: Player Snowman
   m_TagString: Untagged
@@ -11403,7 +11465,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1866331186}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
+  m_Material: {fileID: 6200000, guid: b238d2eb47f7d344995f873d4d216d4a, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -11426,7 +11488,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
+  m_Material: {fileID: 6200000, guid: b238d2eb47f7d344995f873d4d216d4a, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -11443,8 +11505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca8d59eceed4aa4194e353c4d93a2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 1562585776}
-  followCam: {fileID: 722642756}
   stats: {fileID: 1866331191}
   controlMode: 0
   body: {fileID: 1866331189}
@@ -11469,6 +11529,7 @@ MonoBehaviour:
   minBounceFactor: 0.1
   onLaunchBroadcaster: {fileID: 988251884}
   onWingFlapBroadcaster: {fileID: 1191914906}
+  groundPhysics: {fileID: 6200000, guid: 5aa8998c7fe9ae648b659a2f5024af05, type: 2}
 --- !u!114 &1866331191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11483,17 +11544,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
   - level: 0
-    maxLevel: 0
-    minValue: 0
-    maxValue: 0
+    maxLevel: 5
+    minValue: 20
+    maxValue: 60
   - level: 0
     maxLevel: 5
     minValue: 0
     maxValue: 2
   - level: 0
     maxLevel: 5
-    minValue: 90
-    maxValue: 300
+    minValue: 900
+    maxValue: 3000
   - level: 0
     maxLevel: 5
     minValue: 0
@@ -11506,14 +11567,14 @@ MonoBehaviour:
     maxLevel: 5
     minValue: 0
     maxValue: 1.5
-  - level: 0
+  - level: 3
     maxLevel: 5
     minValue: 8
     maxValue: 24
   - level: 0
     maxLevel: 5
-    minValue: 0
-    maxValue: 0
+    minValue: 0.006
+    maxValue: 0.0001
   - level: 1
     maxLevel: 5
     minValue: 0.5
@@ -11547,7 +11608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1866331191}
-  xSpawnDistance: 80
+  xSpawnDistance: 20
   ySpawnDistance: 80
   ySpawnStagger: 5
   xSpawnStagger: 10
@@ -11560,12 +11621,51 @@ MonoBehaviour:
   powerups:
   - {fileID: 1946714472022948365, guid: 8034728b1a580cb488460b0db92f847b, type: 3}
   - {fileID: 6293471922574191601, guid: 95191f60d04830f43a198192c48c36b0, type: 3}
-  - {fileID: 749060520054061487, guid: 277baf2ac1ad39e4188319aab37cdd7b, type: 3}
+  - {fileID: 7866157534364863849, guid: f25278b320db1b64e9ede277bf61407b, type: 3}
+  - {fileID: 6681560710230032933, guid: 4f5472b2ff14dce408281f7bf517d11e, type: 3}
   coins:
   - {fileID: 2035371766157916566, guid: f1b5ad741dfaa0b4b886dd214e5836b2, type: 3}
   baseHazardSpawnRate: 40
-  basePowerupSpawnRate: 10
-  baseCoinSpawnRate: 50
+  basePowerupSpawnRate: 20
+  baseCoinSpawnRate: 40
+--- !u!114 &1866331194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866331186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015ece623650cd349af318023d01083f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1877280659}
+  bgmSource: {fileID: 1138429939}
+  slidingSource: {fileID: 1286868971}
+  collisionClips:
+  - {fileID: 8300000, guid: 757479f0bdb3a3249a41688fd423a06d, type: 3}
+  - {fileID: 8300000, guid: 12b16ed359ce0dc4490cf9fb682e7c72, type: 3}
+  - {fileID: 8300000, guid: 72f2d18d2957d1140b9ae4b7a96d937c, type: 3}
+  powerupClips:
+  - {fileID: 8300000, guid: 3aa593a5118a448458f2e4c1927e9e42, type: 3}
+  - {fileID: 8300000, guid: e1008bdaec9f17b4cbb14230d08db60f, type: 3}
+  slidingClips:
+  - {fileID: 8300000, guid: 4b6d14f7a6ca19045b3ec03ac2e3271d, type: 3}
+  - {fileID: 8300000, guid: fe5eacc372079f64592b7069188051c4, type: 3}
+  - {fileID: 8300000, guid: b2b7633a832001f4482285ead8818e31, type: 3}
+  menuBGMClip: {fileID: 8300000, guid: e13f38e4a7effe94ebb3c8b416142087, type: 3}
+  bgmClips:
+  - {fileID: 8300000, guid: 4043be8d08de41844b119c5c026830e5, type: 3}
+  - {fileID: 8300000, guid: 51b4df04959abcb40a98e46ada7c9cce, type: 3}
+  - {fileID: 8300000, guid: f29c866c06f982e4dabeb4d10d092175, type: 3}
+  cookieClip: {fileID: 8300000, guid: cda8a5d91c0dfba419e0b700eb790126, type: 3}
+  sfxMixer: {fileID: 3518901879358827397, guid: 2133898c7b9cd8e48bfa01820fc00f8b,
+    type: 2}
+  bgmMixer: {fileID: -969904925815851113, guid: 2133898c7b9cd8e48bfa01820fc00f8b,
+    type: 2}
+  slidingMixer: {fileID: 3561962829899223386, guid: 2133898c7b9cd8e48bfa01820fc00f8b,
+    type: 2}
 --- !u!1 &1877280658
 GameObject:
   m_ObjectHideFlags: 0
@@ -11691,7 +11791,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1909676297
 GameObject:

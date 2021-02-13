@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Interactables
+    uniqueID: 1546271615
+    locked: 0
   - name: Menu
     uniqueID: 2940647263
     locked: 0
