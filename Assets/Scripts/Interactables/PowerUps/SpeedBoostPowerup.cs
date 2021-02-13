@@ -11,6 +11,11 @@ public class SpeedBoostPowerup : Interactable
 
     public override void OnPlayerEnter(SnowmanControl player)
     {
+        StatProfile playerStats = player.gameObject.GetComponent<StatProfile>();
+        if(playerStats!=null)
+        {
+            velocityGain += playerStats[StatType.Acceleration].Value;
+        }
         player.GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x + velocityGain, player.GetComponent<Rigidbody2D>().velocity.y);
         Destroy(gameObject);
     }
