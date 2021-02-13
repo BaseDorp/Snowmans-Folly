@@ -122,25 +122,25 @@ public class InteractableSpawner : MonoBehaviour
     {
         playerLocation = this.gameObject.transform.position;
         //Consider decreasing the spawn stagger based on velocity
-        if(playerLocation.x-lastPlayerSpawnLocation.x>xSpawnStagger)
+        if(playerLocation.x>lastPlayerSpawnLocation.x)
         {
-            lastPlayerSpawnLocation = playerLocation;
             SpawnInteractables();
         }
     }
     
     public void SpawnInteractables()
     {
-        float xSpawn = playerLocation.x + xSpawnDistance;
-        float ySpawn = playerLocation.y - ySpawnDistance;
-        spawnLocation = new Vector2(xSpawn, ySpawn);
-        for(float currentXSpawn=playerLocation.x + 10; currentXSpawn<xSpawnDistance;currentXSpawn+=5)
+        for (float furtherX = 0; furtherX < playerLocation.x + xSpawnDistance * 10; furtherX += xSpawnDistance)
         {
+            float xSpawn = playerLocation.x + xSpawnDistance+furtherX;
+            float ySpawn = playerLocation.y - ySpawnDistance;
+            spawnLocation = new Vector2(xSpawn, ySpawn);
             while (spawnLocation.y < playerLocation.y + ySpawnDistance)
             {
                 RandomizeSpawn();
                 spawnLocation.y += ySpawnStagger;
             }
+            lastPlayerSpawnLocation = new Vector2(xSpawn,playerLocation.y);
         }
     }
 
