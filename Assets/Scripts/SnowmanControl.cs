@@ -47,6 +47,8 @@ public sealed class SnowmanControl : MonoBehaviour
     // of the sled as it departs from the player.
     private Vector2 sledVelocity;
     private Vector2 sledPosition;
+    //Shield powerup that attaches to the player
+    private GameObject shield;
     #endregion
     #region Inspector Fields
     [Tooltip("The stats for this snowman controller.")]
@@ -129,6 +131,7 @@ public sealed class SnowmanControl : MonoBehaviour
         Mode = controlMode;
         flapStateHash = Animator.StringToHash(wingFlapStateName);
         currentBounceEffectiveness = 1f;
+        shield = null;
     }
     #endregion
     #region Properties
@@ -168,6 +171,7 @@ public sealed class SnowmanControl : MonoBehaviour
                     staminaSystem.Stamina = staminaSystem.MaxStamina;
                     sledRenderer.enabled = true;
                     SetPhysics();
+                    shield = null;
                     Launched?.Invoke();
                     break;
                 case ControlMode.Sledding:
@@ -213,18 +217,35 @@ public sealed class SnowmanControl : MonoBehaviour
     /// <param name="force">The intensity of the force.</param>
     public void ApplySlowingForce(float force)
     {
-        Debug.Log(stats[StatType.Durability].Value);
-        body.velocity = new Vector2
+        if(shield==null)
         {
-            x = body.velocity.x / (1 + (force/2 * (2-stats[StatType.Durability].Value))),
-            y = body.velocity.y
-        };
+            body.velocity = new Vector2
+            {
+                x = body.velocity.x / (1 + (force / 2 * (2 - stats[StatType.Durability].Value))),
+                y = body.velocity.y
+            };
+        }
+        else
+        {
+            Destroy(shield);
+        }
     }
 
     public void SetPhysics()
     {
         groundPhysics.friction=StatProfile[StatType.Friction].Value;
     }
+
+    public void SetShielded(GameObject newShield)
+    {
+        if(shield!=null)
+        {
+            Destroy(shield);
+        }
+        shield = newShield;
+        shield.transform.parent = gameObject.transform;
+    }
+
     #endregion
     #region Collisions Implementation
     private Vector2 priorFrameVelocity;
@@ -281,7 +302,6 @@ public sealed class SnowmanControl : MonoBehaviour
     private void Update()
     {
         body.velocity = Vector2.ClampMagnitude(body.velocity, StatProfile[StatType.MaxSpeed].Value);
-        Debug.Log(body.velocity);
         // Update common stuff.
         if (body.velocity.magnitude > 0.2f)
         {
