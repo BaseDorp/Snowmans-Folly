@@ -112,7 +112,7 @@ public sealed class SnowmanControl : MonoBehaviour
                 circle.radius.Clamp(0.1f, float.MaxValue);
     }
     #endregion
-#if DEBUG
+#if UNITY_EDITOR
     #region Gizmos Implementation
     private void OnDrawGizmosSelected()
     {

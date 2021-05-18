@@ -41,7 +41,7 @@ public class InteractableSpawner : MonoBehaviour
     [Header("Spawn Rate Parameters")]
 
     [SerializeField]
-    private GameObjectPool spawnablesPool = null;
+    private WeightedGameObjectPool spawnablesPool = null;
     private WeightedPool<GameObject> pool;
 
     [SerializeField]
@@ -114,14 +114,12 @@ public class InteractableSpawner : MonoBehaviour
         ClearInteractables();
         spawnLocation = Vector2.zero;
         lastPlayerSpawnLocation = Vector2.zero;
-
         //As the player improves luck, hazard spawn goes down and powerup spawn goes up
         pool = spawnablesPool.Retrieve();
         foreach (LuckWeightFactor effect in luckEffects)
         {
             pool[effect.weightToAugment] += stats[StatType.Luck].Value * effect.addedWeightPerLuck;
         }
-
         SpawnInteractables();
     }
 

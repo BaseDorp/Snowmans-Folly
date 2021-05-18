@@ -11659,8 +11659,6 @@ MonoBehaviour:
   - gameObject: {fileID: 2035371766157916566, guid: f1b5ad741dfaa0b4b886dd214e5836b2,
       type: 3}
     weight: 40
-  - gameObject: {fileID: 0}
-    weight: 120
 --- !u!1 &1877280658
 GameObject:
   m_ObjectHideFlags: 0
