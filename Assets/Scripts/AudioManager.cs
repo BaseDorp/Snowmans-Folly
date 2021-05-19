@@ -33,11 +33,15 @@ public class AudioManager : MonoBehaviour
     private bool sfxMuted = false;
     private bool bgmMuted = false;
 
+    public static AudioManager CurrentManager { get; private set; }
+
     private void Start()
     {
         sfxSource.outputAudioMixerGroup = sfxMixer;
         bgmSource.outputAudioMixerGroup = bgmMixer;
         slidingSource.outputAudioMixerGroup = slidingMixer;
+
+        CurrentManager = this;
 
         PlayBGM(menuBGMClip);
     }

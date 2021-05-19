@@ -12,6 +12,6 @@ public class Powerup : Interactable
 
     public void PlayPowerupSound(SnowmanControl player)
     {
-        player.gameObject.GetComponent<AudioManager>().PlayPowerup();
+        AudioManager.CurrentManager.PlayPowerup();
     }
 }

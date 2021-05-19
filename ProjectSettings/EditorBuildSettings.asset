@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/Game Scenes/Initialization.unity
+    path: Assets/Scenes/BuildScenes/Initialization.unity
     guid: 2169cf11fb311ce419d6a93515cd00af
   - enabled: 0
-    path: Assets/Scenes/Test Scenes/Parallax Test.unity
+    path: Assets/Scenes/TestScenes/ParallaxTest.unity
     guid: 550ab3ad5d2c5d348a7fc94e3edc7af3
   - enabled: 1
-    path: Assets/Scenes/Game Scenes/Gameplay.unity
+    path: Assets/Scenes/BuildScenes/Gameplay.unity
     guid: dfc66886de606204fb821e5d2e536a31
   m_configObjects: {}

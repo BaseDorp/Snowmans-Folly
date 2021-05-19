@@ -12,7 +12,7 @@ public class Hazard : Interactable
     public override void OnPlayerEnter(SnowmanControl player)
     {
         //TODO: Make hazards not rely on the audio manager being on the player game object
-        player.gameObject.GetComponent<AudioManager>().PlayCollision();
+        AudioManager.CurrentManager.PlayCollision();
         player.ApplySlowingForce(velocityLoss);
         Destroy(gameObject);
     }

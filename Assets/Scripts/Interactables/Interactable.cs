@@ -65,24 +65,16 @@ public abstract class Interactable : MonoBehaviour
             newStates[i] = new IntersectionState { player = controller };
             // Check to see if this player had any previous state.
             // This ensures adds/drops cannot interrupt a collision state.
-            try
+            foreach (IntersectionState priorState in intersectionStates)
             {
-                foreach (IntersectionState priorState in intersectionStates)
+                if (priorState.player == controller)
                 {
-                    if (priorState.player == controller)
-                    {
-                        // Ensure the new array contains the same collision state.
-                        newStates[i].isIntersecting = priorState.isIntersecting;
-                        break;
-                    }
+                    // Ensure the new array contains the same collision state.
+                    newStates[i].isIntersecting = priorState.isIntersecting;
+                    break;
                 }
-                i++;
             }
-            catch
-            {
-                float e = 2;
-            }
-            
+            i++;
         }
         intersectionStates = newStates;
     }

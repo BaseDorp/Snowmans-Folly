@@ -382,13 +382,13 @@ public sealed class SnowmanControl : MonoBehaviour
             // Check for changes in state.
             if (!IsOnSurface)
             {
-                gameObject.GetComponent<AudioManager>().StopPlayingSlide();
+                AudioManager.CurrentManager.StopPlayingSlide();
                 Mode = ControlMode.Flying;
             }
             else if (body.position.y < outOfBoundsMarker.position.y
                 || body.velocity.x < 0.01f)
             {
-                gameObject.GetComponent<AudioManager>().StopPlayingSlide();
+                AudioManager.CurrentManager.StopPlayingSlide();
                 Mode = ControlMode.Disabled;
             }
             else
@@ -396,7 +396,7 @@ public sealed class SnowmanControl : MonoBehaviour
                 // Align the cosmetics such that the snowman
                 // is sliding along the current slope.
                 cosmeticsRoot.right = -currentNormal;
-                gameObject.GetComponent<AudioManager>().PlaySlide();
+                AudioManager.CurrentManager.PlaySlide();
             }
         }
     }

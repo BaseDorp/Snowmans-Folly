@@ -19,7 +19,7 @@ public sealed class CoinPickup : Interactable
     public override void OnPlayerEnter(SnowmanControl player)
     {
         //TODO: Make coins not rely on the audio manager being on the player game object
-        player.gameObject.GetComponent<AudioManager>().PlayCookie();
+        AudioManager.CurrentManager.PlayCookie();
         Currency.Coins += coinValue;
         Destroy(gameObject);
     }
