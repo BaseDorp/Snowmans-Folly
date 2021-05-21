@@ -460,8 +460,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 41256821}
-  - component: {fileID: 41256820}
   - component: {fileID: 41256819}
+  - component: {fileID: 41256820}
   m_Layer: 0
   m_Name: TerrainCollider2
   m_TagString: Untagged
@@ -496,13 +496,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 41256818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1152228c120470147a9d6a7ad36ebe6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 88e53caa54fc5b74895e539ea1bf229e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toMove: {fileID: 41256821}
+  curve: {fileID: 0}
   alignToNormal: 1
   lockToCurve: 1
-  curve: {fileID: 1433247805}
+  toFollow: {fileID: 1866331187}
 --- !u!4 &41256821
 Transform:
   m_ObjectHideFlags: 0
@@ -874,8 +875,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 84940121}
-  - component: {fileID: 84940120}
   - component: {fileID: 84940119}
+  - component: {fileID: 84940120}
   m_Layer: 0
   m_Name: TerrainCollider1
   m_TagString: Untagged
@@ -910,13 +911,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 84940118}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1152228c120470147a9d6a7ad36ebe6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 88e53caa54fc5b74895e539ea1bf229e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toMove: {fileID: 84940121}
+  curve: {fileID: 0}
   alignToNormal: 1
   lockToCurve: 1
-  curve: {fileID: 1433247805}
+  toFollow: {fileID: 1866331187}
 --- !u!4 &84940121
 Transform:
   m_ObjectHideFlags: 0
@@ -1094,7 +1096,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 19368065}
         m_MethodName: BeginRun
         m_Mode: 1
         m_Arguments:
@@ -2561,9 +2563,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 336949107}
-  - component: {fileID: 336949108}
-  - component: {fileID: 336949110}
   - component: {fileID: 336949109}
+  - component: {fileID: 336949108}
   m_Layer: 0
   m_Name: LaunchRampCollider
   m_TagString: Untagged
@@ -2594,13 +2595,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 336949106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1152228c120470147a9d6a7ad36ebe6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 88e53caa54fc5b74895e539ea1bf229e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toMove: {fileID: 336949107}
+  curve: {fileID: 1433247805}
   alignToNormal: 1
   lockToCurve: 1
-  curve: {fileID: 1433247805}
+  toFollow: {fileID: 1866331187}
 --- !u!68 &336949109
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -2619,20 +2621,6 @@ EdgeCollider2D:
   m_Points:
   - {x: -2, y: 0}
   - {x: 2, y: 0}
---- !u!114 &336949110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336949106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08bb504427064f24aaaa64c65547699f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mover: {fileID: 336949108}
-  toFollow: {fileID: 1866331187}
 --- !u!1 &368485612
 GameObject:
   m_ObjectHideFlags: 0
@@ -2715,7 +2703,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 19368065}
         m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
@@ -4174,6 +4162,11 @@ PrefabInstance:
       objectReference: {fileID: 722642755}
     - target: {fileID: 7145285714045227648, guid: b681242affc40dc48ac34faecaf16fad,
         type: 3}
+      propertyPath: drivingCamera
+      value: 
+      objectReference: {fileID: 722642755}
+    - target: {fileID: 7145285714045227648, guid: b681242affc40dc48ac34faecaf16fad,
+        type: 3}
       propertyPath: layers.Array.data[1].scrollFactor.x
       value: -0.0001
       objectReference: {fileID: 0}
@@ -4441,9 +4434,10 @@ GameObject:
   - component: {fileID: 661389670}
   - component: {fileID: 661389669}
   - component: {fileID: 661389668}
+  - component: {fileID: 661389673}
   - component: {fileID: 661389672}
   m_Layer: 5
-  m_Name: StaminaMeterCanvas
+  m_Name: StaminaSystemCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4540,14 +4534,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 661389667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c43c9c7bd228cd947ab042efe70acae7, type: 3}
+  m_Script: {fileID: 11500000, guid: 60e659305577eec46ac61319968e3235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fadeRate: 1
-  visualDrainRate: 0.2
-  drivingSystem: {fileID: 1866331192}
+  visualDrainRate: 1
+  drivingSystem: {fileID: 661389673}
   meterRemaining: {fileID: 761617221}
   meterDrain: {fileID: 1975632330}
+--- !u!114 &661389673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661389667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb6d50e685765654b8af8e39cd148659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stamina: 0
+  maxStamina: 100
+  regenerationDelay: 0.5
+  regenerationRate: 20
 --- !u!1 &677588418
 GameObject:
   m_ObjectHideFlags: 0
@@ -5753,8 +5763,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: DisplayShop
+      - m_Target: {fileID: 19368065}
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7554,7 +7564,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 19368065}
         m_MethodName: DisplayMenu
         m_Mode: 1
         m_Arguments:
@@ -9392,7 +9402,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 19368065}
         m_MethodName: DisplayCredits
         m_Mode: 1
         m_Arguments:
@@ -11436,7 +11446,6 @@ GameObject:
   - component: {fileID: 1866331188}
   - component: {fileID: 1866331190}
   - component: {fileID: 1866331191}
-  - component: {fileID: 1866331192}
   m_Layer: 0
   m_Name: PlayerSnowman
   m_TagString: Untagged
@@ -11507,30 +11516,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1866331186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ca8d59eceed4aa4194e353c4d93a2fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e171c1f9f5faae4c9e3b8153aca6d35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   generator: {fileID: 1562585776}
   followCam: {fileID: 722642756}
   stats: {fileID: 1866331191}
-  controlMode: 0
+  controlMode: 1
   body: {fileID: 1866331189}
   cosmeticsRoot: {fileID: 1565073121}
   headPivot: {fileID: 794975204}
   hitCircles:
-  - position: {x: 0, y: -0.07}
-    radius: 0.45
-  - position: {x: -0.03, y: 0.66}
-    radius: 0.4
+  - position: {x: -0.04, y: -0.11}
+    radius: 0.48
+  - position: {x: -0.02, y: 0.65}
+    radius: 0.41
   animator: {fileID: 1565073122}
-  wingFlapStateName: Wing Flap
+  wingFlapStateName: WingFlap
   launchPoint: {fileID: 1384841049}
   rampEndMarker: {fileID: 503645159}
   outOfBoundsMarker: {fileID: 276224347}
   sledRenderer: {fileID: 90913047}
-  staminaSystem: {fileID: 1866331192}
+  staminaSystem: {fileID: 661389673}
   flightDampingFactor: 5
-  baseFlapStrength: 5
+  baseFlapStrength: 1
   staminaUsePerFlap: 30
   bounceDecayFactor: 0.9
   minBounceFactor: 0.1
@@ -11586,22 +11595,6 @@ MonoBehaviour:
     maxLevel: 5
     minValue: 0.5
     maxValue: 1
---- !u!114 &1866331192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1866331186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c661b6e5c8afb44e9f4e988108bbd38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stamina: 100
-  maxStamina: 100
-  regenerationDelay: 0.5
-  regenerationRate: 20
 --- !u!1 &1877280658
 GameObject:
   m_ObjectHideFlags: 0
